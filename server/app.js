@@ -16,9 +16,16 @@ const startServer = async () => {
     app.use(cors());
     app.use(express.json());
 
-    const client = await mongoose.connect(config.DB.uri, {
+    await mongoose.connect(config.DB.uri, {
         useNewUrlParser: true,
-        useUnifiedTopology: true
+        useUnifiedTopology: true,
+        useCreateIndex: true
+    });
+    const db = mongoose.connection;
+    db.on('error', console.error.bind(console, 'Mongodb Connection Error:' + config.DB.uri));
+    db.once('open', () => {
+        // we're connected !
+        console.log('Mongodb Connection Successful');
     });
 
     if (config.ARGS.includes('--client')) {
