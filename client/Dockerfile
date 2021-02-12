@@ -1,13 +1,18 @@
-FROM node:alpine
 
-FROM node:15-alpine
+# Stage 1: Build react client
+FROM node:14-alpine
 
-WORKDIR /app
+# Working directory be app
+WORKDIR /usr/app
 
-COPY . .
+COPY package*.json ./
+
+# Install dependencies
 RUN npm install
-RUN npm install -g server
 
-EXPOSE 8080
+# copy local files to app folder
+COPY . .
 
-CMD ["npm", "run", "build", "&&", "npm", "run", "serve"]
+EXPOSE 3000
+
+CMD ["npm","start"]

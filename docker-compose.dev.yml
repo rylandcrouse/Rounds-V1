@@ -1,0 +1,55 @@
+version: "3.7"
+
+services:
+  auth:
+    build:
+      context: ./server
+      dockerfile: docker/auth/Dockerfile
+    image: auth-image-dev
+    container_name: auth-container-dev
+    env_file: server/.env
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - "8080:8080"
+  io:
+    build:
+      context: ./server
+      dockerfile: docker/io/Dockerfile
+    image: io-image-dev
+    container_name: io-container-dev
+    env_file: server/.env
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - "5000:8080"
+     networks:
+      - app-network
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    image: client-image-dev
+    container_name: client-image-dev
+    command: npm start
+    volumes:
+      - ./client/:/usr/app
+      - /usr/app/node_modules
+    depends_on:
+      - server
+    ports:
+      - "3000:3000"
+    networks:
+      - app-network
+
+networks:
+    app-network:
+        driver: bridge
+
+volumes:
+    data-volume:
+    node_modules:
+    web-root:
+      driver: local

@@ -30,10 +30,10 @@ const startServer = async () => {
 
     if (config.ARGS.includes('--client')) {
         console.log('Serving client.')
-        const buildPath = path.join(__dirname, 'build');
+        const buildPath = path.join(__dirname, '..', '..', 'client', 'build');
         app.use(express.static(buildPath));
         app.get('*', (request, response) => {
-            response.sendFile(path.resolve(__dirname, 'build', 'index.html'));
+            response.sendFile(path.resolve(buildPath, 'index.html'));
         });
     }
 
