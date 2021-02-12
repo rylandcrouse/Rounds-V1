@@ -1,0 +1,27 @@
+version: "3.7"
+
+services:
+  auth:
+    build:
+      context: ./server
+      dockerfile: docker/auth/Dockerfile
+    image: auth-image
+    container_name: auth-container
+    env_file: server/.env
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - "8080:8080"
+  io:
+    build:
+      context: ./server
+      dockerfile: docker/io/Dockerfile
+    image: io-image
+    container_name: io-container
+    env_file: server/.env
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - "5000:8080"
