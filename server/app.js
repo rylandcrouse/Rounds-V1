@@ -39,7 +39,7 @@ const startServer = async () => {
 
 
     // Routes
-    app.use('/users', users);
+    if (config.ARGS.includes('--auth')) app.use('/users', users);
 
 
     const httpserver = http.createServer(app);

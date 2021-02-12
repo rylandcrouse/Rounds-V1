@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "NODE_ENV=development nodemon server/index.js --io --authentication"
+    "start": "NODE_ENV=development nodemon server/index.js --io --authentication",
+    "build-client": "cd client/ && npm run build"
   },
   "author": "Ryland Crouse",
   "license": "ISC",
