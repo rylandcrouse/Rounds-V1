@@ -9,6 +9,7 @@
     "dev": "NODE_ENV=development nodemon server/index.js --io --authentication",
     "io": "node src/index.js --io",
     "auth": "node src/index.js --auth",
+    "client": "node src/index.js --client",
     "build-client": "cd client/ && npm run build"
   },
   "author": "Ryland Crouse",
