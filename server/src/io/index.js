@@ -18,11 +18,8 @@ const ioify = (server) => {
     io.adapter(createAdapter({ pubClient, subClient }));
     io.on('connection', async (socket) => {
         console.log(`Connection from socket ${socket.id}!`);
-        // await socket.join('blue');
-        const rooms = await io.of('/').adapter.rooms;
-        // console.log(rooms.get('blue'));
     });
-
+    console.log(io)
     console.log('Attaching IO...');
     return io;
 }

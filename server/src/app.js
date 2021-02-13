@@ -29,17 +29,18 @@ const startServer = async () => {
     });
 
     if (config.ARGS.includes('--client')) {
+        const __dirname = path.resolve();
         console.log('Serving client.')
-        const buildPath = path.join(__dirname, 'build');
+        const buildPath = path.join(__dirname, '..', 'client', 'build');
         app.use(express.static(buildPath));
         app.get('*', (request, response) => {
-            response.sendFile(path.resolve(__dirname, 'build', 'index.html'));
+            response.sendFile(path.resolve(buildPath, 'index.html'));
         });
     }
 
 
     // Routes
-    app.use('/users', users);
+    if (config.ARGS.includes('--auth')) app.use('/users', users);
 
 
     const httpserver = http.createServer(app);
@@ -49,7 +50,6 @@ const startServer = async () => {
         ioify(httpserver);
         console.log(`Attached IO to server running on port ${config.server.port}`)
     }
-
 
     const port = config.server.port;
 
