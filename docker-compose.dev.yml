@@ -5,8 +5,8 @@ services:
     build:
       context: ./server
       dockerfile: docker/auth/Dockerfile
-    image: auth-image-prod
-    container_name: auth-container-prod
+    image: auth-image-dev
+    container_name: auth-container-dev
     env_file: server/.env
     volumes:
       - .:/usr/src/app
@@ -19,8 +19,8 @@ services:
     build:
       context: ./server
       dockerfile: docker/io/Dockerfile
-    image: io-image-prod
-    container_name: io-container-prod
+    image: io-image-dev
+    container_name: io-container-dev
     env_file: server/.env
     volumes:
       - .:/usr/src/app
@@ -39,19 +39,18 @@ services:
       - app-network
   client:
     build:
-      context: ./
-      dockerfile: Dockerfile.prd
-    ports:
-      - "3000:8080"
-    image: client-image-prod
-    container_name: client-container-prod
-    # env_file: ./server/.env # TODO - uncomment this to auto-load your .env file!
-    environment:
-      NODE_ENV: production
+      context: ./client
+      dockerfile: Dockerfile
+    image: client-image-dev
+    container_name: client-container-dev
+    command: npm start
+    volumes:
+      - ./client/:/usr/app
+      - /usr/app/node_modules
     depends_on:
-      - mongo
-      - auth
       - io
+    ports:
+      - "3000:3000"
     networks:
       - app-network
 
