@@ -177,7 +177,7 @@ export const refresh = async (req, res) => {
                 types.ACCESS
             );
             // send the access token back to the user
-            return res.status(status.OK).json({token});
+            return res.status(status.OK).json({ token });
             // Otherwise, let the user know they aren't authorized.
         } else {
             return res.status(status.UNAUTHORIZED).json({
@@ -193,6 +193,7 @@ export const refresh = async (req, res) => {
 
 export const match = async (req, res) => {
     const { email, code } = req.body;
+    console.log(email, code)
 
     let user;
     if (email && code) {
@@ -235,15 +236,15 @@ export const match = async (req, res) => {
         );
 
         return res.status(status.OK).json({
-                message: 'Login success.',
-                refresh,
-                access,
-                user: {
-                    email,
-                    name: user.name,
-                    friends: user.friends
-                }
-            });
+            message: 'Login success.',
+            refresh,
+            access,
+            user: {
+                email,
+                name: user.name,
+                friends: user.friends
+            }
+        });
 
     } catch (err) {
         // Inform user of uncaught error.

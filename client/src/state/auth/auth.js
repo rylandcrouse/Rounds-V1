@@ -44,6 +44,23 @@ class Auth {
             console.log('You have been stopped.')
         }
     }
+
+    match = async (matchInfo) => {
+        let result;
+        try {
+            result = await api.auth.match(matchInfo);
+            runInAction(() => {
+                if (result && result.user) {
+                    this.user = result.user;
+                }
+            })
+        } catch (err) {
+            console.log('You have been stopped.')
+            runInAction(() => {
+                this.error = 'Plase try again.'
+            })
+        }
+    }
 }
 
 export default Auth;

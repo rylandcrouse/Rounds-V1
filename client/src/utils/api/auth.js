@@ -103,7 +103,6 @@ class Auth {
     // Try to log the client in automatically if they have a rounds-refresh token
     autoSignIn = async () => {
         try {
-            console.log('trying auto sign in')
             // If there is no refresh token in local storage, do not attempt auto sign in
             if (!this.getRefreshToken()) return;
             //  Destructure the response so that we can save the
