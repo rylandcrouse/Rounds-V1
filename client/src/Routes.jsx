@@ -5,7 +5,7 @@ import Route from './components/Route';
 // Components to display in each route
 import Welcome from './views/welcome/Welcome';
 import Home from './views/Home';
-// import LogIn from './views/welcome/Auth/LogIn';
+import Login from './views/auth/Login';
 // import Match from './views/welcome/Auth/Match';
 // import SignUp from './views/welcome/Auth/SignUp';
 
@@ -19,8 +19,8 @@ const Routes = (props) => {
         <Switch>
             <Route path='/' noauth exact Component={Welcome} />
 
-            {/* <Route path='/login' noauth exact Component={LogIn} />
-            <Route path='/signup' noauth exact Component={SignUp} />
+            <Route path='/login' exact Component={Login} />
+            {/* <Route path='/signup' noauth exact Component={SignUp} />
             <Route path='/match' noauth exact Component={Match} /> */}
 
             <Route path='/home' auth exact Component={Home} />

@@ -10,6 +10,8 @@ class Auth {
 
     user;
 
+    matchEmail;
+
     constructor() {
         makeAutoObservable(this);
     }
@@ -27,6 +29,22 @@ class Auth {
             }
             this.autoTried = true;
         })
+    }
+
+    login = async (loginInfo) => {
+        let result;
+        console.log('lightweight')
+        try {
+            result = await api.auth.signIn(loginInfo);
+            console.log(result);
+            runInAction(() => {
+                if (result && result.user) {
+                    this.matchEmail = result.user.email;
+                }
+            })
+        } catch (err) {
+            console.log('You have been stopped.')
+        }
     }
 }
 
