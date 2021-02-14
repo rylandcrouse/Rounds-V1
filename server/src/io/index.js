@@ -20,6 +20,10 @@ const ioify = (server) => {
     io.use(auth);
     io.on('connection', async (socket) => {
         console.log(`Connection from socket ${socket.id}!`);
+
+        socket.on('joinroom', (room) => {
+            socket.join(room)
+        })
     });
     console.log('Attaching IO...');
     return io;
