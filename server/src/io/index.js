@@ -20,8 +20,22 @@ const ioify = (server) => {
     io.use(auth);
     io.on('connection', async (socket) => {
         console.log(`Connection from socket ${socket.id}!`);
+        // pubClient.set('randomdninf', JSON.stringify([{ 'man': 'guy1' }]))
+        // const result = pubClient.get('randomdninf', (err, reply) => {
+        //     if (err) return console.log(err)
 
+        //     // if (err) return socket.emit('join_err')
+        //     if (reply) return console.log('guy' + reply);
+        // });
+        // console.log(result)
+        // socket.join(room)
         socket.on('joinroom', (room) => {
+            try {
+                const existing = client.get(room);
+                console.log(existing)
+            } catch (err) {
+
+            }
             socket.join(room)
         })
     });
