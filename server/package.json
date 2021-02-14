@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "NODE_ENV=development nodemon server/index.js --io --authentication",
+    "dev": "NODE_ENV=development nodemon src/index.js --io --auth",
     "io": "node src/index.js --io",
     "auth": "node src/index.js --auth",
     "client": "node src/index.js --client",

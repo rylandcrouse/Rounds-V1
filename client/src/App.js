@@ -1,7 +1,19 @@
 import logo from './logo.svg';
 import './App.css';
+import {useContext, useEffect} from 'react';
+import {context} from './index';
 
 function App() {
+  const store = useContext(context);
+
+  useEffect(() => {
+    console.log(store)
+    store.io.connect();
+    return () => {
+      return
+    }
+  }, [])
+  
   return (
     <div className="App">
       <header className="App-header">
