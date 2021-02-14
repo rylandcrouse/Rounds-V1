@@ -26,13 +26,12 @@ export const Formy = styled(Form)`
     border-radius: 0.5em;
     padding: 1.5em 3em 1.5em 3em;
 
-    width: 35%;
+    width: 370px;
     height: 60%;
-    min-width: 370px;
 
     display: flex;
     flex-direction: column;
-    // align-items: space-around;
+    align-items: space-around;
     justify-content: space-around;
     
 
