@@ -4,7 +4,7 @@ import Route from './components/Route';
 
 // Components to display in each route
 import Welcome from './views/welcome/Welcome';
-import Home from './views/Home';
+import Home from './views/home/Home';
 import Login from './views/auth/Login';
 import Match from './views/auth/Match';
 // import SignUp from './views/welcome/Auth/SignUp';
