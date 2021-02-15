@@ -27,15 +27,20 @@ class Instance {
         })
         console.log(this.io);
         console.log(`Connecting socket...`);
-    }
-
-    openRoom = () => {
-        this.socket.emit('open_room');
+        this.socket.on('join_success', (answer) => {
+            console.log(answer);
+            this.status.join.loading = false;
+        })
     }
 
     joinRoom = (room) => {
         this.status.join.loading = true;
         this.socket.emit('join_room', room);
+    }
+
+    createRoom = () => {
+        this.status.host.loading = true;
+        this.socket.emit('create_room');
     }
 }
 

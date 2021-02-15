@@ -3,6 +3,7 @@ import redis from "redis";
 import config from "./../config.js";
 import { createAdapter } from "socket.io-redis";
 import auth from "./auth.js";
+import { nanoid } from 'nanoid'
 
 
 export const pubClient = redis.createClient(config.REDIS.port, config.REDIS.host, { auth_pass: config.REDIS.password });
@@ -32,13 +33,24 @@ const ioify = (server) => {
                 console.log(clients)
                 console.log(`${socket.id} joining ${room}`)
             }
-            // try {
-            //     const existing = client.get(room);
-            //     console.log(existing)
-            // } catch (err) {
+            io.to(socket.id).emit('join_success', `You joined room ${room}.`);
+        })
 
-            // }
-            // socket.join(room)
+        socket.on('create_room', () => {
+            const getRoomById = (roomId) => {
+                pubClient.get(roomId, (err, reply) => {
+                    return reply;
+                })
+            }
+            let roomId = nanoid.generate(10);
+            while (getRoomById(roomId)) roomId = nanoid.generate(10);
+            socket.join(room);
+            const clients = io.sockets.adapter.rooms.get(room);
+            if (clients.has(socket.id)) {
+                console.log(clients)
+                console.log(`${socket.id} created ${roomId}`)
+            }
+            io.to(socket.id).emit('join_success', `You joined room ${roomId}.`);
         })
     });
     console.log('Attaching IO...');
