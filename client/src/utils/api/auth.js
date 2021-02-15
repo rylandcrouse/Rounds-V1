@@ -1,4 +1,3 @@
-import {makeAutoObservable} from 'mobx';
 import axios from 'axios';
 
 class Auth {
@@ -6,7 +5,7 @@ class Auth {
 
     constructor() {
         this.axiosInstance = axios.create({
-            baseURL: `https://localhost:${process.env.PORT || 8080}/`,
+            baseURL: `http://localhost:${process.env.PORT || 8080}/`,
             timeout: 30000,
             // Attaches refresh token in header to retrieve further access tokens
             headers: { Authorization: `Bearer ${this.getRefreshToken()}` },
@@ -28,7 +27,8 @@ class Auth {
             // If our request is denied, we may need a new access token
             // Let's get a new access token and try once more                                                                                                                                                                                                                                                                                                                                                           
             const originalRequest = err.config;
-            if (err.response.status === 401 && !originalRequest._retry) {
+            console.log(err)
+            if (err.response && err.response.status === 401 && !originalRequest._retry) {
                 // we only want to try with a new token once, else it may be another problem
                 originalRequest._retry = true;
                 try {
