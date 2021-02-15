@@ -28,7 +28,9 @@ const Match = observer(() => {
     }
 
     // if success, go to 2FA step
-    // if (!store.auth.matchEmail) return <Redirect to='/login' />
+    if (!store.auth.matchEmail) return <Redirect to='/login' />
+    if (!store.auth.user) return <Redirect to='/home' />
+
 
     return (
         <Container>

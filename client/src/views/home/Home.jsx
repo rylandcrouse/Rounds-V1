@@ -4,6 +4,8 @@ import { context } from '../../index';
 import { Container, Button, RoomInput } from './styled';
 import JoinModal from './components/JoinModal';
 import JoinFocused from './states/JoinFocused';
+import HostFocused from './states/HostFocused';
+
 
 const Home = observer(() => {
     const store = useContext(context);
@@ -18,16 +20,13 @@ const Home = observer(() => {
             {!focused &&
             <>
                 <Button onClick={() => setFocused('join')} variant='dark' >Join</Button>
-                <Button variant='dark' >Host</Button>
+                <Button onClick={() => setFocused('host')} variant='dark' >Host</Button>
+                {/* <Button onClick={() => store.io.createRoom()} variant='dark' >Host</Button> */}
             </>
             }
-            {focused === 'join' && 
-            <>
-                <JoinFocused/>
-            </>
-                    //   <Button variant='dark' >Host</Button>
-            
-            }
+            {focused === 'join' && <><JoinFocused/></>}
+            {focused === 'host' && <><HostFocused back={() => setFocused('')}/></>}
+
 
             {/* <RoomInput></RoomInput> */}
 

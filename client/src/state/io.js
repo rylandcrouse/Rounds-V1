@@ -11,6 +11,10 @@ class Instance {
         join: {
             loading: false,
             success: false
+        },
+        create: {
+            loading: false,
+            success: false
         }
     }
 
@@ -31,6 +35,10 @@ class Instance {
             console.log(answer);
             this.status.join.loading = false;
         })
+        this.socket.on('create_success', (answer) => {
+            console.log(answer);
+            this.status.create.loading = false;
+        })
     }
 
     joinRoom = (room) => {
@@ -39,7 +47,7 @@ class Instance {
     }
 
     createRoom = () => {
-        this.status.host.loading = true;
+        this.status.create.loading = true;
         this.socket.emit('create_room');
     }
 }

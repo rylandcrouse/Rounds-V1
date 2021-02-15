@@ -19,7 +19,7 @@ const Routes = (props) => {
         <Switch>
             <Route path='/' noauth exact Component={Welcome} />
 
-            <Route path='/login' exact Component={Login} />
+            <Route path='/login' noauth exact Component={Login} />
             {/* <Route path='/signup' noauth exact Component={SignUp} /> */}
             <Route path='/match' noauth exact Component={Match} />
 
