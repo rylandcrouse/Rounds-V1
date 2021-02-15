@@ -7,6 +7,13 @@ class Instance {
 
     room = null;
 
+    status = {
+        join: {
+            loading: false,
+            success: false
+        }
+    }
+
     constructor() {
         makeAutoObservable(this);
     }
@@ -27,6 +34,7 @@ class Instance {
     }
 
     joinRoom = (room) => {
+        this.status.join.loading = true;
         this.socket.emit('join_room', room);
     }
 }

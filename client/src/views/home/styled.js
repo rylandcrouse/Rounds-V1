@@ -1,5 +1,26 @@
-import styled from 'styled-components';
-import { Button as BSButton } from 'react-bootstrap';
+import styled, {keyframes} from 'styled-components';
+import { Button as BSButton, FormControl } from 'react-bootstrap';
+
+
+const InputGrow = keyframes`
+    0% {width: 1px;}
+    99.9% {width: 16%;}
+    100% {min-width: 100px;}
+`;
+
+export const RoomInput = styled(FormControl)`
+    max-width: 16%;
+    border-radius: 30px;
+    margin: 1em;
+
+    -webkit-animation-fill-mode:forwards;
+    animation-fill-mode:forwards;
+
+    animation-name: ${InputGrow};
+    animation-duration: 1.4s;
+    animation-iteration-count: once;
+`;
+
 
 export const Button = styled(BSButton)`
     varient: dark;
