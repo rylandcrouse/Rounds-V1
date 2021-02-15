@@ -25,7 +25,12 @@ const ioify = (server) => {
         console.log(`Connection from socket ${socket.id}!`);
 
         socket.on('join_room', (room) => {
-            console.log(`${socket.id} joining ${room}`)
+            socket.join(room);
+            const clients = io.sockets.adapter.rooms.get(room);
+            if (clients.has(socket.id)) {
+                console.log(clients)
+                console.log(`${socket.id} joining ${room}`)
+            }
             // try {
             //     const existing = client.get(room);
             //     console.log(existing)
