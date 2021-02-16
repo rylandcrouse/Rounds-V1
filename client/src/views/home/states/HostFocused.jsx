@@ -19,7 +19,7 @@ const HostFocused = observer(({back}) => {
 
     return (
         <>
-            <div>
+            <div style={{'display': 'flex', 'justifyContent': 'space-around'}}>
                 <HostFocusOption variant='dark' onClick={() => back()}>No</HostFocusOption>
                 <HostFocusOption variant='dark' onClick={() => store.io.createRoom()}>Yes</HostFocusOption>
             </div>

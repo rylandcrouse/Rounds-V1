@@ -42,5 +42,6 @@ export const joinRoom = (io, socket, redis, room) => {
         console.log(clients)
         console.log(`${socket.id} joining ${room}`)
     }
+    io.to(room).emit('user_joined', socket.id);
     io.to(socket.id).emit('join_success', `You joined room ${room}.`);
 }

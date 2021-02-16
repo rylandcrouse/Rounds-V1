@@ -5,7 +5,7 @@ import { Button as BSButton, FormControl } from 'react-bootstrap';
 const Grow = keyframes`
     0% {width: 1px;}
     99.9% {width: 16%;}
-    100% {min-width: 100px;}
+    100% {width: 16%; min-width: 100px;}
 `;
 
 export const RoomInput = styled(FormControl)`
@@ -13,7 +13,7 @@ export const RoomInput = styled(FormControl)`
     border-radius: 30px;
     margin: 1em;
 
-    -webkit-animation-fill-mode:forwards;
+    // -webkit-animation-fill-mode:forwards;
     animation-fill-mode:forwards;
 
     animation-name: ${Grow};
@@ -43,7 +43,7 @@ export const HostFocusOption = styled(Button)`
     animation-fill-mode:forwards;
 
     animation-name: ${Grow};
-    animation-duration: 0.7s;
+    animation-duration: 0.8s;
     animation-iteration-count: once;
 `;
 

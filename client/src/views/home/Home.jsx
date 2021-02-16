@@ -3,7 +3,7 @@ import { observer } from 'mobx-react-lite';
 import { context } from '../../index';
 import { Container, Button, RoomInput } from './styled';
 import JoinModal from './components/JoinModal';
-import JoinFocused from './states/JoinFocused';
+import JoinFocused from './states/joinFocused';
 import HostFocused from './states/HostFocused';
 import { Redirect } from 'react-router-dom';
 
@@ -22,8 +22,10 @@ const Home = observer(() => {
 
             {!focused &&
             <>
+            <span>
                 <Button onClick={() => setFocused('join')} variant='dark' >Join</Button>
                 <Button onClick={() => setFocused('host')} variant='dark' >Host</Button>
+            </span>
                 {/* <Button onClick={() => store.io.createRoom()} variant='dark' >Host</Button> */}
             </>
             }

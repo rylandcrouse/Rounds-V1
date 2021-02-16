@@ -1,9 +1,12 @@
 import { makeAutoObservable, runInAction } from "mobx"
 import io from 'socket.io-client';
 import api from './../utils/api/index'
+import { getStream } from './media';
 
 class Instance {
     socket = null;
+
+    media = null;
 
     room = null;
 
@@ -31,11 +34,13 @@ class Instance {
         })
         console.log(this.io);
         console.log(`Connecting socket...`);
-        this.socket.on('join_success', (answer) => {
+        this.socket.on('join_success', (room) => {
             runInAction(() => {
-                console.log(answer);
+                console.log(room);
+                this.room = room;
                 this.status.join.loading = false;
             })
+            this.initMedia();
         })
         this.socket.on('create_success', (room) => {
             console.log(room);
@@ -43,6 +48,10 @@ class Instance {
                 this.room = room;
                 this.status.create.loading = false;
             })
+            this.initMedia();
+        })
+        this.socket.on('user_joined', (user) => {
+            console.log(user)
         })
     }
 
@@ -54,6 +63,14 @@ class Instance {
     createRoom = () => {
         this.status.create.loading = true;
         this.socket.emit('create_room');
+    }
+
+    initMedia = async () => {
+        const stream = await getStream(); 
+        console.log(stream.getVideoTracks()) 
+        runInAction(() => {
+            this.media = stream
+        })
     }
 }
 
