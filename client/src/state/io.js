@@ -1,4 +1,4 @@
-import { makeAutoObservable } from "mobx"
+import { makeAutoObservable, runInAction } from "mobx"
 import io from 'socket.io-client';
 import api from './../utils/api/index'
 
@@ -32,12 +32,17 @@ class Instance {
         console.log(this.io);
         console.log(`Connecting socket...`);
         this.socket.on('join_success', (answer) => {
-            console.log(answer);
-            this.status.join.loading = false;
+            runInAction(() => {
+                console.log(answer);
+                this.status.join.loading = false;
+            })
         })
-        this.socket.on('create_success', (answer) => {
-            console.log(answer);
-            this.status.create.loading = false;
+        this.socket.on('create_success', (room) => {
+            console.log(room);
+            runInAction(() => {
+                this.room = room;
+                this.status.create.loading = false;
+            })
         })
     }
 

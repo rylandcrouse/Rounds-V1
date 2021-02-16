@@ -7,6 +7,7 @@ import Welcome from './views/welcome/Welcome';
 import Home from './views/home/Home';
 import Login from './views/auth/Login';
 import Match from './views/auth/Match';
+import Room from './views/room/Room';
 // import SignUp from './views/welcome/Auth/SignUp';
 
 
@@ -24,6 +25,7 @@ const Routes = (props) => {
             <Route path='/match' noauth exact Component={Match} />
 
             <Route path='/home' auth exact Component={Home} />
+            <Route path='/room' auth exact Component={Room} />
 
 
         </Switch>

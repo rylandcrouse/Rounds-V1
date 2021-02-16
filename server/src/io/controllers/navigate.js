@@ -19,9 +19,9 @@ export const createRoom = async (io, socket, redis) => {
             if (err || !reply) return io.to(socket.id).emit('user_error');
             console.log(reply)
             const hostId = reply.split('_')[1]
-            const host = await userRef.findOne({ '_id': hostId }, '_id display_name');
-            console.log(host)
-            const newRoom = new Room(roomId, socket.id, host);
+            const hostFromDB = await userRef.findOne({ '_id': hostId }, '_id display_name');
+            console.log(hostFromDB)
+            const newRoom = new Room(roomId, socket.id, hostFromDB);
             socket.join(roomId);
             const clients = io.sockets.adapter.rooms.get(roomId);
             if (clients.has(socket.id)) {

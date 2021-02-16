@@ -5,6 +5,7 @@ import { Container, Button, RoomInput } from './styled';
 import JoinModal from './components/JoinModal';
 import JoinFocused from './states/JoinFocused';
 import HostFocused from './states/HostFocused';
+import { Redirect } from 'react-router-dom';
 
 
 const Home = observer(() => {
@@ -12,6 +13,8 @@ const Home = observer(() => {
     useMemo(() => store.io.connect(), []);
 
     const [focused, setFocused] = useState('');
+
+    if (store.io.room) return <Redirect to='/room' />
 
     return (
         <Container >
