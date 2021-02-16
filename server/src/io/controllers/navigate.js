@@ -1,22 +1,39 @@
-import { nanoid } from 'nanoid'
+import { nanoid } from 'nanoid';
+import mongoose from 'mongoose';
+import Room from './../models/room.js';
 
 
-export const createRoom = (io, socket, redis) => {
+import userRef from '../../authentication/models/user.js'
+
+
+export const createRoom = async (io, socket, redis) => {
+    let roomId = nanoid(10);
     const getRoomById = (roomId) => {
         redis.get(roomId, (err, reply) => {
             return reply;
         })
     }
-    let roomId = nanoid(10);
     while (getRoomById(roomId)) roomId = nanoid.generate(10);
-    socket.join(roomId);
-    const clients = io.sockets.adapter.rooms.get(roomId);
-    if (clients.has(socket.id)) {
-        console.log(clients)
-        console.log(`${socket.id} created ${roomId}`)
+    try {
+        redis.get(`socket_${socket.id}`, async (err, reply) => {
+            if (err || !reply) return io.to(socket.id).emit('user_error');
+            console.log(reply)
+            const hostId = reply.split('_')[1]
+            const host = await userRef.findOne({ '_id': hostId }, '_id display_name');
+            console.log(host)
+            const newRoom = new Room(roomId, socket.id, host);
+            socket.join(roomId);
+            const clients = io.sockets.adapter.rooms.get(roomId);
+            if (clients.has(socket.id)) {
+                console.log(clients)
+                console.log(`${socket.id} created ${roomId}`)
+            }
+            io.to(socket.id).emit('create_success', newRoom);
+        })
+    } catch (error) {
+        return io.to(socket.id).emit('user_error');
     }
-    io.to(socket.id).emit('create_success', `You Created room ${roomId}.`);
-}
+};
 
 export const joinRoom = (io, socket, redis, room) => {
     socket.join(room);
