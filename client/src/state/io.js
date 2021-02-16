@@ -1,23 +1,59 @@
-import { makeAutoObservable } from "mobx"
+import { makeAutoObservable, runInAction } from "mobx"
 import io from 'socket.io-client';
 import api from './../utils/api/index'
 
 class Instance {
-    socket;
+    socket = null;
+
+    room = null;
+
+    status = {
+        join: {
+            loading: false,
+            success: false
+        },
+        create: {
+            loading: false,
+            success: false
+        }
+    }
 
     constructor() {
         makeAutoObservable(this);
     }
 
     connect = () => {
-        const connection = io.connect(`http://localhost:${process.env.PORT || 8080}`, {
+        this.socket = io.connect(`http://localhost:${process.env.PORT || 8080}`, {
             query: {
                 token: api.auth.getAccessToken()
                 // token: api.auth.getAccessToken()
             }
         })
-        console.log(connection);
+        console.log(this.io);
         console.log(`Connecting socket...`);
+        this.socket.on('join_success', (answer) => {
+            runInAction(() => {
+                console.log(answer);
+                this.status.join.loading = false;
+            })
+        })
+        this.socket.on('create_success', (room) => {
+            console.log(room);
+            runInAction(() => {
+                this.room = room;
+                this.status.create.loading = false;
+            })
+        })
+    }
+
+    joinRoom = (room) => {
+        this.status.join.loading = true;
+        this.socket.emit('join_room', room);
+    }
+
+    createRoom = () => {
+        this.status.create.loading = true;
+        this.socket.emit('create_room');
     }
 }
 

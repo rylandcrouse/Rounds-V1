@@ -2,42 +2,34 @@ import { Server } from "socket.io";
 import redis from "redis";
 import config from "./../config.js";
 import { createAdapter } from "socket.io-redis";
-import auth from "./auth.js";
+import auth from "./middleware/auth.js";
+import { nanoid } from 'nanoid'
+
+import { createRoom, joinRoom } from './controllers/navigate.js';
+
+
+export const pubClient = redis.createClient(config.REDIS.port, config.REDIS.host, { auth_pass: config.REDIS.password });
+const subClient = pubClient.duplicate();
 
 
 // Initialize socket.io on server
-
 const ioify = (server) => {
+    server.timeout = 0;
     const io = new Server(server, {
         cors: {
             origin: '*',
         },
         serveClient: false
     });
-    const pubClient = redis.createClient(config.REDIS.port, config.REDIS.host, { auth_pass: config.REDIS.password });
-    const subClient = pubClient.duplicate();
+    // const pubClient = redis.createClient(config.REDIS.port, config.REDIS.host, { auth_pass: config.REDIS.password });
+    // const subClient = pubClient.duplicate();
     io.adapter(createAdapter({ pubClient, subClient }));
     io.use(auth);
     io.on('connection', async (socket) => {
         console.log(`Connection from socket ${socket.id}!`);
-        // pubClient.set('randomdninf', JSON.stringify([{ 'man': 'guy1' }]))
-        // const result = pubClient.get('randomdninf', (err, reply) => {
-        //     if (err) return console.log(err)
 
-        //     // if (err) return socket.emit('join_err')
-        //     if (reply) return console.log('guy' + reply);
-        // });
-        // console.log(result)
-        // socket.join(room)
-        socket.on('joinroom', (room) => {
-            try {
-                const existing = client.get(room);
-                console.log(existing)
-            } catch (err) {
-
-            }
-            socket.join(room)
-        })
+        socket.on('join_room', (room) => joinRoom(io, socket, pubClient, room));
+        socket.on('create_room', () => createRoom(io, socket, pubClient));
     });
     console.log('Attaching IO...');
     return io;
