@@ -10,7 +10,10 @@ import { Redirect } from 'react-router-dom';
 
 const Home = observer(() => {
     const store = useContext(context);
-    useMemo(() => store.io.connect(), []);
+    useMemo(async () => {
+        await store.io.connect();
+    }, []);
+    
 
     const [focused, setFocused] = useState('');
 

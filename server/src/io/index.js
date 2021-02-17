@@ -5,7 +5,7 @@ import { createAdapter } from "socket.io-redis";
 import auth from "./middleware/auth.js";
 import { nanoid } from 'nanoid'
 
-import { createRoom, joinRoom } from './controllers/navigate.js';
+import { createRoom, joinRoom, sendOffer, sendAnswer } from './controllers/navigate.js';
 
 
 export const pubClient = redis.createClient(config.REDIS.port, config.REDIS.host, { auth_pass: config.REDIS.password });
@@ -30,6 +30,10 @@ const ioify = (server) => {
 
         socket.on('join_room', (room) => joinRoom(io, socket, pubClient, room));
         socket.on('create_room', () => createRoom(io, socket, pubClient));
+
+        socket.on('offer', (socketIdToCall, offer) => sendOffer(io, socket, pubClient, socketIdToCall, offer))
+        socket.on('answer', (socketIdToAnswer, offer) => sendAnswer(io, socket, pubClient, socketIdToAnswer, offer))
+
     });
     console.log('Attaching IO...');
     return io;

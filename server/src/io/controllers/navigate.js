@@ -45,3 +45,15 @@ export const joinRoom = (io, socket, redis, room) => {
     io.to(room).emit('user_joined', socket.id);
     io.to(socket.id).emit('join_success', `You joined room ${room}.`);
 }
+
+export const sendOffer = (io, socket, pubClient, socketIdToCall, offer) => {
+    const call = { callerId: socket.id, offer };
+    io.to(socketIdToCall).emit('call', call);
+    console.log(`${socket.id} calling ${socketIdToCall}`)
+}
+
+export const sendAnswer = (io, socket, pubClient, socketIdToAnswer, offer) => {
+    const answer = { callerId: socket.id, offer };
+    io.to(socketIdToAnswer).emit('answer', answer);
+    console.log(`${socket.id} answering ${socketIdToAnswer}`)
+}
