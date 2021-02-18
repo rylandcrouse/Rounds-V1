@@ -4,6 +4,7 @@ import { Redirect } from 'react-router-dom';
 import { context } from '../../../../index';
 import Peer from 'peerjs';
 import { getStream } from './../../../../state/media'
+import { StyledVideo } from './styled'
 
 
 const Video = observer(({ id }) => {
@@ -29,7 +30,7 @@ const Video = observer(({ id }) => {
 
 
     return (
-        <video ref={videoRef} autoPlay playsInline />
+        <StyledVideo ref={videoRef} autoPlay playsInline />
     )
 });
 

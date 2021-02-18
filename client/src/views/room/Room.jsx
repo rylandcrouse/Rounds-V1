@@ -1,5 +1,5 @@
 import { Observer, observer } from 'mobx-react-lite';
-import React, {useContext, useEffect, useRef} from 'react'
+import React, { useContext, useEffect, useRef } from 'react'
 import { Redirect } from 'react-router-dom';
 import { context } from '../../index';
 import Video from './components/video/video';
@@ -20,11 +20,13 @@ const Room = observer(() => {
         console.log(Object.keys(store.io.streams))
     }, [store.io.room, store.io.media, store.io.streams])
 
-    
+
     return (
         <Container>
             <div>videosss</div>
-            {Object.keys(store.io.streams).map(id => <Video id={id} key={id} />)}
+            <div>
+                {Object.keys(store.io.streams).map(id => <Video id={id} key={id} />)}
+            </div>
         </Container>
     )
 });
