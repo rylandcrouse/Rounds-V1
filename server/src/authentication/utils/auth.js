@@ -39,6 +39,7 @@ export const createAccess = (display_name, email, userId, type) => {
 export const createRefresh = (display_name, email, userId, type) => {
     const payload = { display_name, email, userId, type };
 
+    console.log(payload)
     return jwt.sign(payload, config.JWT.REFRESH_SECRET, {
         expiresIn: expirations[type],
     });

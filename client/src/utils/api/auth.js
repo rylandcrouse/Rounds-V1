@@ -62,7 +62,7 @@ class Auth {
     signIn = async (user) => {
         // upon success, returns response containing email for 2fa authentication
         try {
-            const match= await this.axiosInstance.post('/users/signin', user);
+            const match = await this.axiosInstance.post('/users/signin', user);
             return match;
         } catch (err) {
             throw new Error(err);
@@ -104,6 +104,7 @@ class Auth {
     autoSignIn = async () => {
         try {
             // If there is no refresh token in local storage, do not attempt auto sign in
+            console.log(this.getRefreshToken())
             if (!this.getRefreshToken()) return;
             //  Destructure the response so that we can save the
             //   same refresh token and initial access token in localStorage and be sure not to send it
@@ -117,6 +118,11 @@ class Auth {
         } catch (err) {
             throw new Error(err);
         }
+    }
+
+    signOut = () => {
+        localStorage.removeItem('rounds-refresh');
+        localStorage.removeItem('rounds-access');
     }
 
     // Retrieve access token from localStorage

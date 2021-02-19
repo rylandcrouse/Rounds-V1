@@ -3,6 +3,7 @@ import io from 'socket.io-client';
 import api from './../utils/api/index'
 import { getStream, } from './media';
 import Peer from 'peerjs';
+import auth from './auth/auth'
 var getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
 const configuration = { 'iceServers': [{ 'urls': 'stun:stun.l.google.com:19302' }] };
 
@@ -76,6 +77,9 @@ class Instance {
         });
         this.socket.on('FORCED_DISCONNECT', () => {
             console.log('forcing disconnect')
+            console.log(auth)
+            auth.signOut();
+            this.socket.disconnect();
         })
         this.socket.on('join_success', ({ roomState }) => {
             runInAction(() => {
@@ -155,4 +159,4 @@ class Instance {
     }
 }
 
-export default Instance;
+export default new Instance();

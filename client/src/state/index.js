@@ -1,9 +1,9 @@
-import Auth from './auth/auth';
+import auth from './auth/auth';
 import io from './io';
 
 const store = {
-    io: new io(),
-    auth: new Auth()
+    io,
+    auth
 }
 
 export default store;

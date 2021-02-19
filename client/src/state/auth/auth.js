@@ -5,11 +5,11 @@ class Auth {
     loading = false;
     success = null;
     error = '';
-    
+
     autoTried = false;
-    
+
     user = null;
-    
+
     matchEmail = '';
 
     constructor() {
@@ -61,6 +61,16 @@ class Auth {
             })
         }
     }
+
+    signOut = () => {
+        api.auth.signOut();
+        this.loading = false;
+        this.success = null;
+        this.error = '';
+        this.autoTried = true;
+        this.user = null;
+        this.matchEmail = '';
+    }
 }
 
-export default Auth;
+export default new Auth();

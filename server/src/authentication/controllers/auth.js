@@ -131,6 +131,10 @@ export const autoSignIn = async (req, res) => {
         // Refresh token should come in Authorization header in the form `Bearer ${token}`
         // Let's get the token and verify it with the the refresh token secret
         const refresh = req.headers.authorization?.split(' ')[1]
+        if (!refresh) return res.status(status.UNAUTHORIZED).json({
+            error: err
+        });
+
         const userInfo = jwt.verify(refresh, config.JWT.REFRESH_SECRET);
 
         const user = await User.findOne({ email: userInfo.email });
@@ -207,6 +211,9 @@ export const match = async (req, res) => {
                 error: 'User does not exist.'
             });
         }
+
+        console.log(user.code)
+        console.log(code)
 
         // If codes do not match, deny access and tell the client
         if (user.code !== code.toUpperCase()) {
