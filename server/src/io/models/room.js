@@ -1,13 +1,12 @@
 class Room {
     id = null;
-    hostSocket = null;
+    hostSocketId = null;
     players = [];
 
-    constructor(id, hostSocket, host) {
-        this.hostId = host;
+    constructor(id, host, hostSocketId) {
+        this.hostSocketId = hostSocketId;
         this.id = id;
         this.players = [host]
-        this.hostSocket = hostSocket;
     }
 }
 

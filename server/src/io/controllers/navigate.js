@@ -17,21 +17,26 @@ export const createRoom = async (io, socket, redis) => {
     }
     while (getRoomById(roomId)) roomId = nanoid.generate(10);
     try {
-        redis.get(`socket_${socket.id}`, async (err, reply) => {
-            if (err || !reply) return io.to(socket.id).emit('user_error');
-            console.log(reply)
-            const hostId = reply.split('_')[1]
-            const hostFromDB = await userRef.findOne({ '_id': hostId }, '_id display_name');
-            console.log(hostFromDB)
-            const newRoom = new Room(roomId, socket.id, hostFromDB);
-            socket.join(roomId);
-            const clients = io.sockets.adapter.rooms.get(roomId);
-            if (clients.has(socket.id)) {
-                console.log(clients)
-                console.log(`${socket.id} created ${roomId}`)
-            }
-            redis.set(roomId, JSON.stringify(newRoom))
-            io.to(socket.id).emit('create_success', newRoom);
+        redis.get(`socket_${socket.id}`, async (err, hostId) => {
+            if (err || !hostId) return io.to(socket.id).emit('user_error');
+            // const hostId = reply.split('_')[1]
+            await redis.get(hostId, async (err, hostUserInfo) => {
+                if (err || !hostUserInfo) return io.to(socket.id).emit('user_error');
+
+                const parsedHost = JSON.parse(hostUserInfo)
+                console.log(parsedHost)
+
+
+                const newRoom = new Room(roomId, parsedHost, socket.id);
+                socket.join(roomId);
+                const clients = io.sockets.adapter.rooms.get(roomId);
+                if (clients.has(socket.id)) {
+                    console.log(clients)
+                    console.log(`${socket.id} created ${roomId}`)
+                }
+                redis.set(roomId, JSON.stringify(newRoom))
+                io.to(socket.id).emit('create_success', newRoom);
+            })
         })
     } catch (error) {
         return io.to(socket.id).emit('user_error');
