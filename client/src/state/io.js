@@ -74,6 +74,9 @@ class Instance {
                 });
             });
         });
+        this.socket.on('FORCED_DISCONNECT', () => {
+            console.log('forcing disconnect')
+        })
         this.socket.on('join_success', ({ roomState }) => {
             runInAction(() => {
                 console.log(roomState);

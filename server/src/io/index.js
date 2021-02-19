@@ -7,10 +7,8 @@ import { nanoid } from 'nanoid'
 
 import { createRoom, joinRoom, sendOffer, sendAnswer } from './controllers/navigate.js';
 
-
 export const pubClient = redis.createClient(config.REDIS.port, config.REDIS.host, { auth_pass: config.REDIS.password });
 const subClient = pubClient.duplicate();
-
 
 // Initialize socket.io on server
 const ioify = (server) => {
@@ -23,9 +21,40 @@ const ioify = (server) => {
     });
     // const pubClient = redis.createClient(config.REDIS.port, config.REDIS.host, { auth_pass: config.REDIS.password });
     // const subClient = pubClient.duplicate();
+    // Object.keys(io.sockets.sockets.rooms).forEach(function (id) {
+    //     console.log("ID:", id)  // socketId
+    // })
     io.adapter(createAdapter({ pubClient, subClient }));
-    io.use(auth);
+    const authHelper = (socket, next) => auth(socket, next, io)
+    io.use(authHelper);
+    const removeUser = (socketIdToRm) => {
+        io.sockets.sockets.get(socketIdToRm).disconnect()
+        console.log('removied' + socketIdToRm)
+    }
+    io.on('kill_old', () => {
+        console.log('kill_old')
+    })
     io.on('connection', async (socket) => {
+
+        pubClient.get(`socket_${socket.id}`, async (err, userIdFromSocket) => {
+            if (err) console.log('Error checking for user already online');
+            console.log(userIdFromSocket)
+            // console.log(io.sockets.sockets.get(parsedUFR.socketId))
+            // io.sockets.sockets.get(parsedUFR.socketId).disconnect()
+            pubClient.get(userIdFromSocket, async (err, userFromRedis) => {
+                if (err) console.log('Error checking for user already online');
+                const parsedUser = await JSON.parse(userFromRedis)
+                console.log(parsedUser)
+                if (parsedUser && parsedUser.oldSocketId) io.to(parsedUser.oldSocketId).emit('FORCED_DISCONNECT')
+
+            })
+        })
+        socket.emit('kill_old')
+
+        socket.on('kill_old', () => {
+            console.log('kill_old')
+        })
+        // console.log(io.sockets.sockets.get(socket.id))
         console.log(`Connection from socket ${socket.id}!`);
 
         socket.on('join_room', (room) => joinRoom(io, socket, pubClient, room));
