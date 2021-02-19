@@ -23,6 +23,7 @@ const JoinFocused = observer(({ back }) => {
     const store = useContext(context);
 
     const handleJoin = () => {
+        console.log(input.roomId)
         store.io.joinRoom(input.roomId);
         clearInput();
         console.log('handling join...')

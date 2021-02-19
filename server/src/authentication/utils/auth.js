@@ -27,8 +27,8 @@ export const types = {
 }
 
 
-export const createAccess = (email, userId, type) => {
-    const payload = { email, userId, type };
+export const createAccess = (display_name, email, userId, type) => {
+    const payload = { display_name, email, userId, type };
 
     return jwt.sign(payload, config.JWT.ACCESS_SECRET, {
         expiresIn: expirations[type],
@@ -36,8 +36,8 @@ export const createAccess = (email, userId, type) => {
 }
 
 
-export const createRefresh = (email, userId, type) => {
-    const payload = { email, userId, type };
+export const createRefresh = (display_name, email, userId, type) => {
+    const payload = { display_name, email, userId, type };
 
     return jwt.sign(payload, config.JWT.REFRESH_SECRET, {
         expiresIn: expirations[type],

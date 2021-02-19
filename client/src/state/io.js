@@ -46,6 +46,11 @@ class Instance {
                 token: api.auth.getAccessToken()
             }
         })
+        this.socket.on('user_left', ({ userSocketId, room }) => {
+            delete this.streams[userSocketId];
+            delete this.calls[userSocketId];
+            this.room = room;
+        })
         this.socket.on('connect', () => {
             console.log('connected');
             peer = new Peer(this.socket.id);
@@ -69,10 +74,10 @@ class Instance {
                 });
             });
         });
-        this.socket.on('join_success', (room) => {
+        this.socket.on('join_success', ({ roomState }) => {
             runInAction(() => {
-                console.log(room);
-                this.room = room;
+                console.log(roomState);
+                this.room = roomState;
                 this.status.join.loading = false;
             })
             this.initMedia();
@@ -85,10 +90,11 @@ class Instance {
             })
             this.initMedia();
         })
-        this.socket.on('user_joined', (userId) => {
-            console.log(`${userId} joined.`)
-            if (userId !== this.socket.id) {
-                this.callPeer(userId)
+        this.socket.on('user_joined', ({ userSocketId, roomState }) => {
+            console.log(`${userSocketId} joined.`)
+            this.room = roomState
+            if (userSocketId !== this.socket.id) {
+                this.callPeer(userSocketId)
             }
         })
 

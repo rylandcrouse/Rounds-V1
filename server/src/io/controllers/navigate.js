@@ -1,9 +1,11 @@
 import { nanoid } from 'nanoid';
 import mongoose from 'mongoose';
 import Room from './../models/room.js';
+import getFromRedis from './helpers/getFromRedis.js'
 
 
 import userRef from '../../authentication/models/user.js'
+import user from '../../authentication/models/user.js';
 
 
 export const createRoom = async (io, socket, redis) => {
@@ -28,6 +30,7 @@ export const createRoom = async (io, socket, redis) => {
                 console.log(clients)
                 console.log(`${socket.id} created ${roomId}`)
             }
+            redis.set(roomId, JSON.stringify(newRoom))
             io.to(socket.id).emit('create_success', newRoom);
         })
     } catch (error) {
@@ -35,15 +38,74 @@ export const createRoom = async (io, socket, redis) => {
     }
 };
 
-export const joinRoom = (io, socket, redis, room) => {
-    socket.join(room);
-    const clients = io.sockets.adapter.rooms.get(room);
-    if (clients.has(socket.id)) {
-        console.log(clients)
-        console.log(`${socket.id} joining ${room}`)
-    }
-    io.to(room).emit('user_joined', socket.id);
-    io.to(socket.id).emit('join_success', `You joined room ${room}.`);
+export const joinRoom = async (io, socket, redis, room) => {
+
+    console.log('room to get from redis ' + room)
+
+    ////////////////////1////////////////////
+    await redis.get(room, async (err, reply) => {
+        if (err || !reply) return io.to(socket).emit('join_failure');
+
+        const existingRoom = await JSON.parse(reply);
+
+        console.log(existingRoom)
+
+        const socket_alias = `socket_${socket.id}`
+        console.log(socket_alias)
+
+        /////////////////2//////////////////
+        await redis.get(socket_alias, async (err, userKeyFromSocketId) => {
+            if (err) return io.to(socket).emit('join_failure');
+            console.log(typeof userKeyFromSocketId)
+
+            console.log(userKeyFromSocketId)
+            /////////////////3//////////////////
+            await redis.get(userKeyFromSocketId, async (err, userObjectFromUserId) => {
+                if (err) return io.to(socket).emit('join_failure');
+                const parsedUser = await JSON.parse(userObjectFromUserId)
+                if (!parsedUser) return io.to(socket).emit('join_failure');
+
+
+                let alteredRoom = { ...existingRoom };
+                console.log('altered room =' + alteredRoom)
+                alteredRoom.players.push(parsedUser);
+
+
+                alteredRoom = JSON.stringify(alteredRoom);
+
+                redis.set(room, alteredRoom);
+
+
+                await redis.get(room, async (err, newRoomFromRedis) => {
+                    if (err) return io.to(socket).emit('join_failure');
+
+                    const parsedRoom = await JSON.parse(newRoomFromRedis);
+                    console.log(parsedRoom)
+                    if (!parsedRoom.players.find(player => player.socketId === socket.id)) return io.to(socket.id).emit('join_failure');
+                    socket.join(room);
+                    const clients = io.sockets.adapter.rooms.get(room);
+                    if (!clients.has(socket.id)) {
+                        redis.set(room, existingRoom)
+                    }
+                    io.to(room).emit('user_joined', { userSocketId: socket.id, roomState: parsedRoom });
+                    io.to(socket.id).emit('join_success', { roomState: parsedRoom });
+
+                })
+
+
+                console.log(parsedUser)
+            })
+            /////////////////3//////////////////
+
+        })
+        /////////////////2//////////////////
+
+
+    })
+    /////////////////1//////////////////
+
+
+
 }
 
 export const sendOffer = (io, socket, pubClient, socketIdToCall, offer) => {

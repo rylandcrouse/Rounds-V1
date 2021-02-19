@@ -137,6 +137,7 @@ export const autoSignIn = async (req, res) => {
 
         // Create an initial session token to later be refreshed using a refresh token
         let access = createAccess(
+            user.display_name,
             user.email,
             user._id,
             types.ACCESS
@@ -223,6 +224,7 @@ export const match = async (req, res) => {
     try {
         // Create a long-lived refresh token for the client to refresh the session token
         let refresh = createRefresh(
+            user.display_name,
             user.email,
             user._id,
             types.USER_REFRESH
@@ -230,6 +232,7 @@ export const match = async (req, res) => {
 
         // Create an initial session token to later be refreshed using a refresh token
         let access = createAccess(
+            user.display_name,
             user.email,
             user._id,
             types.ACCESS
