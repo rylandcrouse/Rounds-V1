@@ -23,7 +23,7 @@ const Room = observer(() => {
 
     return (
         <Container>
-            <div>videosss</div>
+            <div>{store.io.room.id}</div>
             <div>
                 {Object.keys(store.io.streams).map(id => <Video id={id} key={id} />)}
             </div>

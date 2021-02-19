@@ -47,10 +47,11 @@ class Instance {
                 token: api.auth.getAccessToken()
             }
         })
-        this.socket.on('user_left', ({ userSocketId, room }) => {
+        this.socket.on('user_left', ({ userSocketId, newRoomState }) => {
+            console.log('handling user_left for ' + userSocketId)
             delete this.streams[userSocketId];
             delete this.calls[userSocketId];
-            this.room = room;
+            this.room = newRoomState;
         })
         this.socket.on('connect', () => {
             console.log('connected');

@@ -5,7 +5,7 @@ import { createAdapter } from "socket.io-redis";
 import auth from "./middleware/auth.js";
 import { nanoid } from 'nanoid'
 
-import { createRoom, joinRoom, sendOffer, sendAnswer } from './controllers/navigate.js';
+import { createRoom, joinRoom, sendOffer, sendAnswer, handleDisconnect } from './controllers/navigate.js';
 
 export const pubClient = redis.createClient(config.REDIS.port, config.REDIS.host, { auth_pass: config.REDIS.password });
 const subClient = pubClient.duplicate();
@@ -39,8 +39,6 @@ const ioify = (server) => {
         pubClient.get(`socket_${socket.id}`, async (err, userIdFromSocket) => {
             if (err) console.log('Error checking for user already online');
             console.log(userIdFromSocket)
-            // console.log(io.sockets.sockets.get(parsedUFR.socketId))
-            // io.sockets.sockets.get(parsedUFR.socketId).disconnect()
             pubClient.get(userIdFromSocket, async (err, userFromRedis) => {
                 if (err) console.log('Error checking for user already online');
                 const parsedUser = await JSON.parse(userFromRedis)
@@ -63,6 +61,7 @@ const ioify = (server) => {
         socket.on('offer', (socketIdToCall, offer) => sendOffer(io, socket, pubClient, socketIdToCall, offer))
         socket.on('answer', (socketIdToAnswer, offer) => sendAnswer(io, socket, pubClient, socketIdToAnswer, offer))
 
+        socket.on('disconnect', () => handleDisconnect(io, socket, pubClient));
     });
     console.log('Attaching IO...');
     return io;
