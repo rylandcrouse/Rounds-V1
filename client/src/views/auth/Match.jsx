@@ -51,7 +51,7 @@ const Match = observer(() => {
                         </Formy.Text>
                 </Inpoots>
                 <Groupet>
-                    <Button>Login</Button>
+                    <Button onClick={() => handleSubmit()}>Login</Button>
                 </Groupet>
 
 

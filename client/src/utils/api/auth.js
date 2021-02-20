@@ -49,7 +49,7 @@ class Auth {
     }
 
     // Handles sign up
-    register = async (newUserInfo) => {
+    signUp = async (newUserInfo) => {
         // upon success, returns response containing email for 2fa authentication
         try {
             const result = await this.axiosInstance.post('/users/signup', newUserInfo);

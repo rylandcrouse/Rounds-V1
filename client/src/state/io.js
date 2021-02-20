@@ -5,26 +5,17 @@ import { getStream, } from './media';
 import Peer from 'peerjs';
 import auth from './auth/auth'
 import config from './../utils/config';
-var getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
 const configuration = { 'iceServers': [{ 'urls': 'stun:stun.l.google.com:19302' }] };
-
-let peer;
 
 
 class Instance {
     getUserMedia = () => navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
 
-
     socket = null;
-
     peer;
-
     media = null;
-
     streams = {};
-
     calls = {};
-
     room = null;
 
     status = {
@@ -56,11 +47,11 @@ class Instance {
         })
         this.socket.on('connect', () => {
             console.log('connected');
-            peer = new Peer(this.socket.id);
-            console.log(peer)
-            peer.on('call', (call) => {
+            this.peer = new Peer(this.socket.id);
+            console.log(this.peer)
+            this.peer.on('call', (call) => {
                 console.log('GOT CALL')
-                getUserMedia({ video: true, audio: true }, (stream) => {
+                this.getUserMedia({ video: true, audio: true }, (stream) => {
                     call.answer(stream); // Answer the call with an A/V stream.
                     call.on('stream', (remoteStream) => {
                         console.log('GOT ANSWER')
@@ -126,9 +117,9 @@ class Instance {
         console.log(this)
         // const call = await this.peer.call('another-peers-id', this.streams[this.socket.id]);
         // console.log(call)
-        getUserMedia({ video: true, audio: true }, (stream) => {
+        this.getUserMedia({ video: true, audio: true }, (stream) => {
             console.log(this)
-            this.calls[socketId] = peer.call(socketId, stream);
+            this.calls[socketId] = this.peer.call(socketId, stream);
             this.calls[socketId].on('stream', (remoteStream) => {
                 // Show stream in some video/canvas element.
                 this.streams[socketId] = remoteStream
