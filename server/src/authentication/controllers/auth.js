@@ -1,6 +1,6 @@
 import User from '../models/user.js';
 import jwt from 'jsonwebtoken';
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 import status from 'http-status-codes';
 import { types, createAccess, createRefresh, emailCode } from '../utils/auth.js';
 import mongoose from 'mongoose';
@@ -131,12 +131,17 @@ export const autoSignIn = async (req, res) => {
         // Refresh token should come in Authorization header in the form `Bearer ${token}`
         // Let's get the token and verify it with the the refresh token secret
         const refresh = req.headers.authorization?.split(' ')[1]
+        if (!refresh) return res.status(status.UNAUTHORIZED).json({
+            error: err
+        });
+
         const userInfo = jwt.verify(refresh, config.JWT.REFRESH_SECRET);
 
         const user = await User.findOne({ email: userInfo.email });
 
         // Create an initial session token to later be refreshed using a refresh token
         let access = createAccess(
+            user.display_name,
             user.email,
             user._id,
             types.ACCESS
@@ -177,7 +182,7 @@ export const refresh = async (req, res) => {
                 types.ACCESS
             );
             // send the access token back to the user
-            return res.status(status.OK).json({token});
+            return res.status(status.OK).json({ token });
             // Otherwise, let the user know they aren't authorized.
         } else {
             return res.status(status.UNAUTHORIZED).json({
@@ -193,6 +198,7 @@ export const refresh = async (req, res) => {
 
 export const match = async (req, res) => {
     const { email, code } = req.body;
+    console.log(email, code)
 
     let user;
     if (email && code) {
@@ -205,6 +211,9 @@ export const match = async (req, res) => {
                 error: 'User does not exist.'
             });
         }
+
+        console.log(user.code)
+        console.log(code)
 
         // If codes do not match, deny access and tell the client
         if (user.code !== code.toUpperCase()) {
@@ -222,6 +231,7 @@ export const match = async (req, res) => {
     try {
         // Create a long-lived refresh token for the client to refresh the session token
         let refresh = createRefresh(
+            user.display_name,
             user.email,
             user._id,
             types.USER_REFRESH
@@ -229,21 +239,22 @@ export const match = async (req, res) => {
 
         // Create an initial session token to later be refreshed using a refresh token
         let access = createAccess(
+            user.display_name,
             user.email,
             user._id,
             types.ACCESS
         );
 
         return res.status(status.OK).json({
-                message: 'Login success.',
-                refresh,
-                access,
-                user: {
-                    email,
-                    name: user.name,
-                    friends: user.friends
-                }
-            });
+            message: 'Login success.',
+            refresh,
+            access,
+            user: {
+                email,
+                name: user.name,
+                friends: user.friends
+            }
+        });
 
     } catch (err) {
         // Inform user of uncaught error.
