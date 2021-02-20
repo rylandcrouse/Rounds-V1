@@ -5,6 +5,7 @@ import { pubClient } from '../index.js';
 
 
 const auth = async (socket, next, io) => {
+    console.log('auth io middleware')
     // console.log(socket.adapter.sids)
     // console.log('io middlewre')
     const user = jwt.verify(socket.handshake.query.token, config.JWT.ACCESS_SECRET);

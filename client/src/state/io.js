@@ -4,6 +4,7 @@ import api from './../utils/api/index'
 import { getStream, } from './media';
 import Peer from 'peerjs';
 import auth from './auth/auth'
+import config from './../utils/config';
 var getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
 const configuration = { 'iceServers': [{ 'urls': 'stun:stun.l.google.com:19302' }] };
 
@@ -42,7 +43,7 @@ class Instance {
     }
 
     connect = async () => {
-        this.socket = await io.connect(`http://localhost:${process.env.PORT || 8080}`, {
+        this.socket = await io.connect(`http://${config.io.host}:${config.io.port}`, {
             query: {
                 token: api.auth.getAccessToken()
             }

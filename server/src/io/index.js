@@ -12,6 +12,7 @@ const subClient = pubClient.duplicate();
 
 // Initialize socket.io on server
 const ioify = (server) => {
+    console.log('ioifying')
     server.timeout = 0;
     const io = new Server(server, {
         cors: {

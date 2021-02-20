@@ -1,11 +1,12 @@
 import axios from 'axios';
+import config from './../config';
 
 class Auth {
     axiosInstance;
 
     constructor() {
         this.axiosInstance = axios.create({
-            baseURL: `http://localhost:${process.env.PORT || 8080}/`,
+            baseURL: `http://${config.auth.host}:${config.auth.port}`,
             timeout: 30000,
             // Attaches refresh token in header to retrieve further access tokens
             headers: { Authorization: `Bearer ${this.getRefreshToken()}` },
