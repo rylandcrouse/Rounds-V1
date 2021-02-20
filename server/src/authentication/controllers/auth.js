@@ -1,6 +1,6 @@
 import User from '../models/user.js';
 import jwt from 'jsonwebtoken';
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 import status from 'http-status-codes';
 import { types, createAccess, createRefresh, emailCode } from '../utils/auth.js';
 import mongoose from 'mongoose';
