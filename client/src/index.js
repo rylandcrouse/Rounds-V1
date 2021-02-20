@@ -1,21 +1,21 @@
-import React, {createContext} from 'react';
+import React, { createContext } from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import {BrowserRouter as Router} from 'react-router-dom';
+import { BrowserRouter as Router } from 'react-router-dom';
 
 import store from './state';
 export const context = createContext()
 
 ReactDOM.render(
-  <React.StrictMode>
-    <context.Provider value={store}>
-      <Router>
-        <App />
-      </Router>
-    </context.Provider>
-  </React.StrictMode>,
+  // <React.StrictMode>
+  <context.Provider value={store}>
+    <Router>
+      <App />
+    </Router>
+  </context.Provider>,
+  // </React.StrictMode>,
   document.getElementById('root')
 );
 

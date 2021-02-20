@@ -10,7 +10,10 @@ import { Redirect } from 'react-router-dom';
 
 const Home = observer(() => {
     const store = useContext(context);
-    useMemo(() => store.io.connect(), []);
+    useMemo(async () => {
+        await store.io.connect();
+    }, []);
+
 
     const [focused, setFocused] = useState('');
 
@@ -21,16 +24,16 @@ const Home = observer(() => {
             {/* {store.auth.user.email} */}
 
             {!focused &&
-            <>
-            <span>
-                <Button onClick={() => setFocused('join')} variant='dark' >Join</Button>
-                <Button onClick={() => setFocused('host')} variant='dark' >Host</Button>
-            </span>
-                {/* <Button onClick={() => store.io.createRoom()} variant='dark' >Host</Button> */}
-            </>
+                <>
+                    <span>
+                        <Button onClick={() => setFocused('join')} variant='dark' >Join</Button>
+                        <Button onClick={() => setFocused('host')} variant='dark' >Host</Button>
+                    </span>
+                    {/* <Button onClick={() => store.io.createRoom()} variant='dark' >Host</Button> */}
+                </>
             }
-            {focused === 'join' && <><JoinFocused/></>}
-            {focused === 'host' && <><HostFocused back={() => setFocused('')}/></>}
+            {focused === 'join' && <><JoinFocused back={() => setFocused('')} /></>}
+            {focused === 'host' && <><HostFocused back={() => setFocused('')} /></>}
 
 
             {/* <RoomInput></RoomInput> */}

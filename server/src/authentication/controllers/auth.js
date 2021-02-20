@@ -1,6 +1,6 @@
 import User from '../models/user.js';
 import jwt from 'jsonwebtoken';
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 import status from 'http-status-codes';
 import { types, createAccess, createRefresh, emailCode } from '../utils/auth.js';
 import mongoose from 'mongoose';
@@ -131,12 +131,17 @@ export const autoSignIn = async (req, res) => {
         // Refresh token should come in Authorization header in the form `Bearer ${token}`
         // Let's get the token and verify it with the the refresh token secret
         const refresh = req.headers.authorization?.split(' ')[1]
+        if (!refresh) return res.status(status.UNAUTHORIZED).json({
+            error: err
+        });
+
         const userInfo = jwt.verify(refresh, config.JWT.REFRESH_SECRET);
 
         const user = await User.findOne({ email: userInfo.email });
 
         // Create an initial session token to later be refreshed using a refresh token
         let access = createAccess(
+            user.display_name,
             user.email,
             user._id,
             types.ACCESS
@@ -207,6 +212,9 @@ export const match = async (req, res) => {
             });
         }
 
+        console.log(user.code)
+        console.log(code)
+
         // If codes do not match, deny access and tell the client
         if (user.code !== code.toUpperCase()) {
             return res.status(status.UNAUTHORIZED).json({
@@ -223,6 +231,7 @@ export const match = async (req, res) => {
     try {
         // Create a long-lived refresh token for the client to refresh the session token
         let refresh = createRefresh(
+            user.display_name,
             user.email,
             user._id,
             types.USER_REFRESH
@@ -230,6 +239,7 @@ export const match = async (req, res) => {
 
         // Create an initial session token to later be refreshed using a refresh token
         let access = createAccess(
+            user.display_name,
             user.email,
             user._id,
             types.ACCESS
