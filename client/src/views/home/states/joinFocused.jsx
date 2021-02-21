@@ -12,7 +12,7 @@ const StyledSVG = styled.svg`
 
     &:hover {
         cursor: pointer;
-        color: red;
+        color: #4778ff;
     }
 `;
 
