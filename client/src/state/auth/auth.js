@@ -45,6 +45,20 @@ class Auth {
         }
     }
 
+    signUp = async (signUpInfo) => {
+        let result;
+        try {
+            result = await api.auth.signUp(signUpInfo);
+            runInAction(() => {
+                if (result && result.user) {
+                    this.matchEmail = result.user.email;
+                }
+            })
+        } catch (err) {
+            console.log('You have been stopped.')
+        }
+    }
+
     match = async (matchInfo) => {
         let result;
         try {
