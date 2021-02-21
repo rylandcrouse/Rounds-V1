@@ -42,14 +42,13 @@ const Room = observer(() => {
             </Options>
             <Content>
             <DefaultVideos>
-            {Object.keys(store.io.streams).map(id => <Video id={id} key={id} />)}
-            {Object.keys(store.io.streams).map(id => <Video id={id} key={id} />)}
-            {Object.keys(store.io.streams).map(id => <Video id={id} key={id} />)}
-            {Object.keys(store.io.streams).map(id => <Video id={id} key={id} />)}
-            {Object.keys(store.io.streams).map(id => <Video id={id} key={id} />)}
-            {Object.keys(store.io.streams).map(id => <Video id={id} key={id} />)}
-            {Object.keys(store.io.streams).map(id => <Video id={id} key={id} />)}
-
+                {Object.keys(store.io.streams).map(id => <Video id={id} key={id} />)}
+                {Object.keys(store.io.streams).map(id => <Video id={id} key={id} />)}
+                {Object.keys(store.io.streams).map(id => <Video id={id} key={id} />)}
+                {Object.keys(store.io.streams).map(id => <Video id={id} key={id} />)}
+                {Object.keys(store.io.streams).map(id => <Video id={id} key={id} />)}
+                {Object.keys(store.io.streams).map(id => <Video id={id} key={id} />)}
+                {Object.keys(store.io.streams).map(id => <Video id={id} key={id} />)}
                 {Object.keys(store.io.streams).map(id => <Video id={id} key={id} />)}
                 {Object.keys(store.io.streams).map(id => <Video id={id} key={id} />)}
                 {Object.keys(store.io.streams).map(id => <Video id={id} key={id} />)}
