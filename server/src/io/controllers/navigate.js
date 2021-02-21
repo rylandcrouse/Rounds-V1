@@ -36,6 +36,9 @@ export const createRoom = async (io, socket, redis) => {
                     console.log(clients)
                     console.log(`${socket.id} created ${roomId}`)
                 }
+                parsedHost.currentRoom = roomId;
+                const stringHost = JSON.stringify(parsedHost)
+                redis.set(hostId, stringHost);
                 redis.set(roomId, JSON.stringify(newRoom))
                 io.to(socket.id).emit('create_success', newRoom);
             })
