@@ -3,7 +3,7 @@ import React, { useContext, useEffect, useRef } from 'react'
 import { Redirect } from 'react-router-dom';
 import { context } from '../../index';
 import Video from './components/video/video';
-import { Container } from './styled';
+import { Container, DefaultVideos, RoomIdBox } from './styled';
 
 
 const Room = observer(() => {
@@ -23,10 +23,20 @@ const Room = observer(() => {
 
     return (
         <Container>
-            <div>{store.io.room.id}</div>
-            <div>
+            <RoomIdBox>{store.io.room.id}</RoomIdBox>
+            <DefaultVideos>
                 {Object.keys(store.io.streams).map(id => <Video id={id} key={id} />)}
-            </div>
+                {Object.keys(store.io.streams).map(id => <Video id={id} key={id} />)}
+                {Object.keys(store.io.streams).map(id => <Video id={id} key={id} />)}
+                {Object.keys(store.io.streams).map(id => <Video id={id} key={id} />)}
+                {Object.keys(store.io.streams).map(id => <Video id={id} key={id} />)}
+                {Object.keys(store.io.streams).map(id => <Video id={id} key={id} />)}
+                {Object.keys(store.io.streams).map(id => <Video id={id} key={id} />)}
+                {Object.keys(store.io.streams).map(id => <Video id={id} key={id} />)}
+                {Object.keys(store.io.streams).map(id => <Video id={id} key={id} />)}
+             
+
+            </DefaultVideos>
         </Container>
     )
 });

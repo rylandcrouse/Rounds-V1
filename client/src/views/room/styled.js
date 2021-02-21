@@ -1,4 +1,4 @@
-import styled, {keyframes} from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import { Button as BSButton, FormControl } from 'react-bootstrap';
 
 
@@ -47,4 +47,32 @@ export const Container = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: center;
+`;
+
+export const DefaultVideos = styled.div`
+    max-width: 1000px;
+    // height: 90%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex-flow: row wrap;
+
+`;
+
+export const RoomIdBox = styled.div`
+    border-radius: 0.6em;
+    padding: 0.85em;
+    margin: 0.8em 0.1em 0.8em 0.1em;
+    overflow-x: scroll;
+    text-align: center;
+    background-color: #f4f4f4;
+    font-size: 0.88em;
+    display:flex;
+    align-items:center;
+
+
+    @media (max-width: 300px) {
+        display: none;
+    }
 `;
