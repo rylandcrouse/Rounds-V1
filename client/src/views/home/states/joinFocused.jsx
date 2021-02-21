@@ -12,7 +12,7 @@ const StyledSVG = styled.svg`
 
     &:hover {
         cursor: pointer;
-        color: red;
+        color: #4778ff;
     }
 `;
 
@@ -37,7 +37,6 @@ const JoinFocused = observer(({ back }) => {
     }
 
     const handleBack = (event) => {
-        console.log(event)
         if (['container', 'back-btn'].includes(event.target.id || event.currentTarget)) {
             back();
         }
