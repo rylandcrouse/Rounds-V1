@@ -1,8 +1,11 @@
 import styled from 'styled-components';
 
 export const StyledVideo = styled.video`
-    border-radius: 5px;
-    min-width: 260px;
-    max-width: 300px;
-    margin: 0.22em;
+    flex: 2;
+    border-radius: 8px;
+    min-width: 175px;
+    max-width: 28%;
+    max-height: 28%;
+    margin: 2px;
+    // flex-shrink: 1;
 `;

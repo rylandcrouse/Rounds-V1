@@ -43,15 +43,49 @@ export const Container = styled.div`
     width: 100vw;
     height: 100vh;
 
+    // display: flex;
+    // flex-direction: column;
+    // align-items: center;
+`;
+
+export const Options = styled.div`
+    width: 99%;
+    height: 8%;
+    // border: 1px solid black;
+    border-radius: 5px;
+    margin: 2px;
+    padding: 0.2em;
+
     display: flex;
-    flex-direction: column;
+    // flex-direction: column;
     align-items: center;
     justify-content: center;
 `;
 
+export const SideOpts = styled.div`
+    flex: 1;
+    display: flex;
+    align-items: center;
+`;
+
+export const Content = styled.div`
+    width:100%;
+    height: 90%;
+    // border: 1px solid black;
+    border-radius: 5px;
+    margin: 1px;
+
+    display: flex;
+    // flex-direction: column;
+    align-items: center;
+    justify-content: center;
+`;
+
+
 export const DefaultVideos = styled.div`
-    max-width: 1000px;
-    // height: 90%;
+    width: 90%;
+    max-width: 90%;
+    max-height: 90%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -64,15 +98,24 @@ export const RoomIdBox = styled.div`
     border-radius: 0.6em;
     padding: 0.85em;
     margin: 0.8em 0.1em 0.8em 0.1em;
-    overflow-x: scroll;
     text-align: center;
     background-color: #f4f4f4;
     font-size: 0.88em;
     display:flex;
     align-items:center;
+`;
 
+export const LeaveBtn = styled.div`
+    color: #3b3b3b;
+    border-radius: 0.6em;
+    padding: 0.2em 0.65em;
+    margin: 1em;
+    text-align: center;
+    background-color: #f4f4f4;
+    font-size: 0.94em;
 
-    @media (max-width: 300px) {
-        display: none;
+    &:hover {
+        background-color: #c2c2c2;
+        cursor: pointer;
     }
 `;

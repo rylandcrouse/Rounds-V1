@@ -109,6 +109,18 @@ class Instance {
 
     }
 
+    handleLeave = () => {
+        this.socket.emit('leaving')
+        for (let key in this.streams) {
+            console.log(key);
+            if (key !== this.socket.id) {
+                delete this.streams[key]
+                delete this.calls[key]
+
+            }
+        }
+    }
+
     addCallListener = () => {
         this.peer.once('call', async (call) => {
             console.log('recieving call')

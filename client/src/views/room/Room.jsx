@@ -3,7 +3,7 @@ import React, { useContext, useEffect, useRef } from 'react'
 import { Redirect } from 'react-router-dom';
 import { context } from '../../index';
 import Video from './components/video/video';
-import { Container, DefaultVideos, RoomIdBox } from './styled';
+import { Container, DefaultVideos, RoomIdBox, Options, SideOpts, LeaveBtn, Content } from './styled';
 
 
 const Room = observer(() => {
@@ -21,22 +21,40 @@ const Room = observer(() => {
     }, [store.io.room, store.io.media, store.io.streams])
 
 
+    const handleLeave = () => {
+        console.log('leaving');
+        store.io.handleLeave();
+    }
+
     return (
         <Container>
-            <RoomIdBox>{store.io.room.id}</RoomIdBox>
-            <DefaultVideos>
-                {Object.keys(store.io.streams).map(id => <Video id={id} key={id} />)}
-                {Object.keys(store.io.streams).map(id => <Video id={id} key={id} />)}
-                {Object.keys(store.io.streams).map(id => <Video id={id} key={id} />)}
-                {Object.keys(store.io.streams).map(id => <Video id={id} key={id} />)}
-                {Object.keys(store.io.streams).map(id => <Video id={id} key={id} />)}
-                {Object.keys(store.io.streams).map(id => <Video id={id} key={id} />)}
-                {Object.keys(store.io.streams).map(id => <Video id={id} key={id} />)}
-                {Object.keys(store.io.streams).map(id => <Video id={id} key={id} />)}
-                {Object.keys(store.io.streams).map(id => <Video id={id} key={id} />)}
-             
+            <Options>   
+                <SideOpts>
+                    <LeaveBtn onClick={() => handleLeave()}>
+                        Leave
+                    </LeaveBtn>
+                </SideOpts>
+                <RoomIdBox style={{'float': 'left'}}>{store.io.room.id}</RoomIdBox>
+                <SideOpts>
 
+                </SideOpts>
+
+            </Options>
+            <Content>
+            <DefaultVideos>
+            {Object.keys(store.io.streams).map(id => <Video id={id} key={id} />)}
+            {Object.keys(store.io.streams).map(id => <Video id={id} key={id} />)}
+            {Object.keys(store.io.streams).map(id => <Video id={id} key={id} />)}
+            {Object.keys(store.io.streams).map(id => <Video id={id} key={id} />)}
+            {Object.keys(store.io.streams).map(id => <Video id={id} key={id} />)}
+            {Object.keys(store.io.streams).map(id => <Video id={id} key={id} />)}
+            {Object.keys(store.io.streams).map(id => <Video id={id} key={id} />)}
+
+                {Object.keys(store.io.streams).map(id => <Video id={id} key={id} />)}
+                {Object.keys(store.io.streams).map(id => <Video id={id} key={id} />)}
+                {Object.keys(store.io.streams).map(id => <Video id={id} key={id} />)}
             </DefaultVideos>
+            </Content>
         </Container>
     )
 });
