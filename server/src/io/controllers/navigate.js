@@ -165,6 +165,8 @@ export const handleLeave = async (io, socket, redis) => {
 
     let parsedRoom = await JSON.parse(currentRoomState)
 
+    socket.leave(parsedRoom.id);
+
     console.log('^^^^^^^^^^^^^^^^^^^^^')
     console.log(parsedRoom)
     console.log(parsedRoom.players.map(x => x.socketId !== userParsed.socketId))

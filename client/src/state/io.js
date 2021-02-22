@@ -12,7 +12,7 @@ let peer;
 
 
 class Instance {
-    getUserMedia = () => navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+    getUserMedia = async () => await navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
 
 
     socket = null;
@@ -43,6 +43,7 @@ class Instance {
     }
 
     connect = async () => {
+        if (this.socket) return;
         this.socket = await io.connect(`http://${config.io.host}:${config.io.port}`, {
             query: {
                 token: api.auth.getAccessToken()
@@ -110,15 +111,21 @@ class Instance {
     }
 
     handleLeave = () => {
+        if (window.stream) { window.stream.getTracks().forEach(function (track) { track.stop(); }); }
         this.socket.emit('leaving')
+        this.media.getTracks().forEach(track => track.stop());
+        this.streams[this.socket.id].getTracks().forEach(track => track.stop());
         for (let key in this.streams) {
             console.log(key);
+            delete this.streams[key]
             if (key !== this.socket.id) {
-                delete this.streams[key]
                 delete this.calls[key]
-
+                peer.connections[key][0].peerConnection.close()
+                console.log(peer.connections)
             }
         }
+        this.media = null;
+        this.room = null;
     }
 
     addCallListener = () => {
@@ -164,10 +171,13 @@ class Instance {
 
 
     initMedia = async () => {
+        if (window.stream) { console.log(window) }
+
         const stream = await getStream();
         runInAction(() => {
             this.media = stream;
             this.streams[this.socket.id] = stream;
+            console.log(this.streams[this.socket.id]);
         })
         console.log(`My socket id is ${this.socket.id}`)
     }

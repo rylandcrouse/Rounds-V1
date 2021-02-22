@@ -8,24 +8,28 @@ import { Container, DefaultVideos, RoomIdBox, Options, SideOpts, LeaveBtn, Conte
 
 const Room = observer(() => {
     const store = useContext(context);
-    if (!store.io.room) return <Redirect to='/home' />
     // const videoRef = useRef(null);
-
-
+    
+    
     useEffect(() => {
         // videoRef.current.srcObject = store.io.media
         // console.log(store.io.room.id)
         // console.log(store.io.media)
+        console.log('**************')
         console.log(store.io.streams)
+        console.log('**************')
+
         console.log(Object.keys(store.io.streams))
     }, [store.io.room, store.io.media, store.io.streams])
-
-
+    
+    
     const handleLeave = () => {
         console.log('leaving');
         store.io.handleLeave();
     }
 
+    if (!store.io.room) return <Redirect to='/home' />
+    
     return (
         <Container>
             <Options>   
@@ -42,16 +46,9 @@ const Room = observer(() => {
             </Options>
             <Content>
             <DefaultVideos>
+               
                 {Object.keys(store.io.streams).map(id => <Video id={id} key={id} />)}
-                {Object.keys(store.io.streams).map(id => <Video id={id} key={id} />)}
-                {Object.keys(store.io.streams).map(id => <Video id={id} key={id} />)}
-                {Object.keys(store.io.streams).map(id => <Video id={id} key={id} />)}
-                {Object.keys(store.io.streams).map(id => <Video id={id} key={id} />)}
-                {Object.keys(store.io.streams).map(id => <Video id={id} key={id} />)}
-                {Object.keys(store.io.streams).map(id => <Video id={id} key={id} />)}
-                {Object.keys(store.io.streams).map(id => <Video id={id} key={id} />)}
-                {Object.keys(store.io.streams).map(id => <Video id={id} key={id} />)}
-                {Object.keys(store.io.streams).map(id => <Video id={id} key={id} />)}
+                
             </DefaultVideos>
             </Content>
         </Container>
