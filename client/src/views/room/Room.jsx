@@ -2,8 +2,9 @@ import { Observer, observer } from 'mobx-react-lite';
 import React, { useContext, useEffect, useRef } from 'react'
 import { Redirect } from 'react-router-dom';
 import { context } from '../../index';
-import Video from './components/video/video';
-import { Container, DefaultVideos, RoomIdBox, Options, SideOpts, LeaveBtn, Content } from './styled';
+import Default from './components/default/Default';
+import { Container, RoomIdBox, Options, SideOpts, LeaveBtn, Content } from './styled';
+import games from './games/';
 
 
 const Room = observer(() => {
@@ -45,11 +46,8 @@ const Room = observer(() => {
 
             </Options>
             <Content>
-            <DefaultVideos>
-               
-                {Object.keys(store.io.streams).map(id => <Video id={id} key={id} />)}
-                
-            </DefaultVideos>
+                { !store.io.room.game && <Default/>}
+                { store.io.room.game && games[store.io.room.game.type]()}
             </Content>
         </Container>
     )

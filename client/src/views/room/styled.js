@@ -70,7 +70,7 @@ export const SideOpts = styled.div`
 
 export const Content = styled.div`
     width:100%;
-    height: 90%;
+    height: 92%;
     // border: 1px solid black;
     border-radius: 5px;
     margin: 1px;
@@ -118,4 +118,19 @@ export const LeaveBtn = styled.div`
         background-color: #c2c2c2;
         cursor: pointer;
     }
+`;
+
+export const DfltVidBox = styled.div`
+    border-radius: 5%;
+    max-width: 230px;
+    padding: 2px;
+    // height: 30%;
+    // border-collapse: separate; 
+    margin: 2px;
+
+    @media (max-width: 780px) {
+        // visibility: hidden;
+        max-width: 28%;
+      }
+    
 `;

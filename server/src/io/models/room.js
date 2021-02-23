@@ -3,6 +3,10 @@ class Room {
     hostSocketId = null;
     players = [];
 
+    // game = {
+    //     type: 'WhichWhat'
+    // };
+
     constructor(id, host, hostSocketId) {
         this.hostSocketId = hostSocketId;
         this.id = id;
