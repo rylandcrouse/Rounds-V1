@@ -84,13 +84,17 @@ export const Content = styled.div`
 
 export const DefaultVideos = styled.div`
     width: 90%;
-    max-width: 90%;
+    max-width: 72%;
     max-height: 90%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     flex-flow: row wrap;
+
+    @media (max-width: 1000px) {
+        max-width: 90%;
+      }
 
 `;
 
@@ -129,7 +133,6 @@ export const DfltVidBox = styled.div`
     margin: 2px;
 
     @media (max-width: 780px) {
-        // visibility: hidden;
         max-width: 28%;
       }
     
