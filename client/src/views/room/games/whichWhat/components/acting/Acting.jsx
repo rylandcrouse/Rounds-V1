@@ -18,7 +18,7 @@ const Acting = observer(({setActHeight, gameHeight}) => {
             setActHeight(videoRef.current.children[0].clientHeight)
             console.log(videoRef.current.children[0].clientHeight)
         });
-        // if (videoRef.current) return resizeObserver.observe(videoRef.current);
+        if (videoRef.current) return resizeObserver.observe(videoRef.current);
         // console.log(room)
     }, [])
     
