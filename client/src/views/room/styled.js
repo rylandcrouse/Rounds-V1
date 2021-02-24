@@ -130,10 +130,10 @@ export const DfltVidBox = styled.div`
     padding: 2px;
     // height: 30%;
     // border-collapse: separate; 
-    margin: 2px;
+    // margin: 2px;
 
-    @media (max-width: 780px) {
-        max-width: 28%;
-      }
+    // @media (max-width: 780px) {
+    //     max-width: 28%;
+    //   }
     
 `;
