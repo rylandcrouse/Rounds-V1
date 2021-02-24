@@ -3,29 +3,31 @@ import { Form } from 'react-bootstrap';
 
 
 export const ActionHistory = styled.div`
-    width: 97%;
-    height: 88%;
+    width: 100%;
+    height: 92%;
 
     display: flex;
     flex-direction: column-reverse;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
 `;
 
 
 export const InputGuess = styled(Form.Control)`
-    width: 97%;
+    margin-top: 0.1em;
+    width: 100%;
     border-color: #f0f0f0;
-    margin: 0.1em;
-    height: 10%;
-    font-size: 1.4em;
+    height: 8%;
+    font-size: 1.3em;
 `;
 
 
 export const ActionBox = styled.div`
-    height: ${props => props.actHeight / 1}px;
+    margin: 0.2em;
+    height: ${props => props.actHeight}px;
     // max-height: ${props => props.actHeight}px;
-    border-radius: 2%;
+    border-radius: 1%;
+    padding: 0.2em;
     background-color: #ededed;
     display: flex;
     
@@ -36,6 +38,6 @@ export const ActionBox = styled.div`
 
 export const History = styled.div`
     width: 100%;
-    height: 82%;
+    height: 92%;
 
 `;

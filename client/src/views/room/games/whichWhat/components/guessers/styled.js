@@ -7,6 +7,7 @@ export const GuesserVidBox = styled.div`
 `;
 
 export const GuessersBox = styled.div`
+    margin: 0.2em;
     // width: 12%;
     max-height: ${props => props.gameHeight}px;
     display: flex;

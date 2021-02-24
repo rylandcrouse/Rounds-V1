@@ -1,10 +1,8 @@
 import styled from 'styled-components';
 
 export const GamePortion = styled.div`
-    height: 75%;
-    width: 96%;
-    // padding-top: 56.25%;
-    position: relative;
+    max-height: 95%;
+    width: 94%;
     display: grid;
     grid-template-columns: 12% 56% 31%;
 
@@ -17,5 +15,4 @@ export const Container = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items:center;
-    overflow: none;
 `;
