@@ -49,12 +49,12 @@ export const Container = styled.div`
 `;
 
 export const Options = styled.div`
-    width: 99%;
-    height: 8%;
+    width: 100%;
+    height: 7%;
     // border: 1px solid black;
     border-radius: 5px;
-    margin: 2px;
-    padding: 0.2em;
+    // margin: 2px;
+    // padding: 0.1em;
 
     display: flex;
     // flex-direction: column;
@@ -70,10 +70,10 @@ export const SideOpts = styled.div`
 
 export const Content = styled.div`
     width:100%;
-    height: 92%;
+    height: 85%;
     // border: 1px solid black;
     border-radius: 5px;
-    margin: 1px;
+    // margin: 1px;
 
     display: flex;
     // flex-direction: column;
@@ -100,8 +100,8 @@ export const DefaultVideos = styled.div`
 
 export const RoomIdBox = styled.div`
     border-radius: 0.6em;
-    padding: 0.85em;
-    margin: 0.8em 0.1em 0.8em 0.1em;
+    padding: 0.5em 0.6em;
+    // margin: 0.8em 0.1em 0.8em 0.1em;
     text-align: center;
     background-color: #f4f4f4;
     font-size: 0.88em;

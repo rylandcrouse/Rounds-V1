@@ -13,24 +13,31 @@ export const ActionHistory = styled.div`
 `;
 
 
-export const InputGuess = styled(Form.Control)`
-    margin-top: 0.1em;
+export const InputGuess = styled.input`
+    // margin-bottom: 0.1em;
     width: 100%;
     border-color: #f0f0f0;
     height: 8%;
-    font-size: 1.3em;
+    font-size: 1rem;
+    border-radius: 0%;
+    border: none;
+    background-color: #ededed;
+
+
+    &:focus {
+        outline: none;
+    }
 `;
 
 
 export const ActionBox = styled.div`
-    margin: 0.2em;
-    height: ${props => props.actHeight}px;
-    // max-height: ${props => props.actHeight}px;
-    border-radius: 1%;
-    padding: 0.2em;
-    background-color: #ededed;
+    height: ${props => props.actHeight * 0.9}px;
+    max-height: 99%;
+    border-radius: 1px;
+    // padding: 0.5em 0;
+    background-color: #e9e9e9;
     display: flex;
-    
+    // margin-bottom: 0 0.16em;
     flex-direction: column;
     align-items: center;
     justify-content: center;
