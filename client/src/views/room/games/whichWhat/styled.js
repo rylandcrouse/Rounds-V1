@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const GamePortion = styled.div`
     max-height: 97%;
-    width: 99%;
+    width: 95%;
     display: grid;
     grid-template-columns: 14.5% 60.5% 23%;
 `;

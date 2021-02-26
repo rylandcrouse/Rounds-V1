@@ -10,18 +10,15 @@ const DefaultView = observer(() => {
     const store = useContext(context);
 
     return (
-            <DefaultVideos id='DfltVideos'>
-                {Object.keys(store.io.streams).map(id => <DfltVidBox key={id}><Video id={id} key={id} /></DfltVidBox>)}
-                {Object.keys(store.io.streams).map(id => <DfltVidBox key={id}><Video id={id} key={id} /></DfltVidBox>)}
-                {Object.keys(store.io.streams).map(id => <DfltVidBox key={id}><Video id={id} key={id} /></DfltVidBox>)}
-                {Object.keys(store.io.streams).map(id => <DfltVidBox key={id}><Video id={id} key={id} /></DfltVidBox>)}
-                {Object.keys(store.io.streams).map(id => <DfltVidBox key={id}><Video id={id} key={id} /></DfltVidBox>)}
-                {Object.keys(store.io.streams).map(id => <DfltVidBox key={id}><Video id={id} key={id} /></DfltVidBox>)}
-                {Object.keys(store.io.streams).map(id => <DfltVidBox key={id}><Video id={id} key={id} /></DfltVidBox>)}
-                {Object.keys(store.io.streams).map(id => <DfltVidBox key={id}><Video id={id} key={id} /></DfltVidBox>)}
-                {Object.keys(store.io.streams).map(id => <DfltVidBox key={id}><Video id={id} key={id} /></DfltVidBox>)}
+        <DefaultVideos id='DfltVideos'>
+            {Object.keys(store.io.streams).map(id => <DfltVidBox key={id}><Video id={id} key={id} /></DfltVidBox>)}
+            {Object.keys(store.io.streams).map(id => <DfltVidBox key={id}><Video id={id} key={id} /></DfltVidBox>)}
+            {Object.keys(store.io.streams).map(id => <DfltVidBox key={id}><Video id={id} key={id} /></DfltVidBox>)}
+            {Object.keys(store.io.streams).map(id => <DfltVidBox key={id}><Video id={id} key={id} /></DfltVidBox>)}
+            {Object.keys(store.io.streams).map(id => <DfltVidBox key={id}><Video id={id} key={id} /></DfltVidBox>)}
+            {Object.keys(store.io.streams).map(id => <DfltVidBox key={id}><Video id={id} key={id} /></DfltVidBox>)}
 
-            </DefaultVideos>
+        </DefaultVideos>
     )
 });
 

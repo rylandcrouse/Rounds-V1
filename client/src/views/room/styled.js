@@ -80,6 +80,7 @@ export const Content = styled.div`
     // border: 1px solid black;
     border-radius: 5px;
     // margin: 1px;
+    position: relative;
 
     display: flex;
     // flex-direction: column;
@@ -87,10 +88,9 @@ export const Content = styled.div`
     justify-content: center;
 `;
 
-
 export const DefaultVideos = styled.div`
-    width: 90%;
-    max-width: 72%;
+    width: 85%;
+    max-width: 65%;
     max-height: 90%;
     display: flex;
     flex-direction: column;
@@ -131,8 +131,9 @@ export const LeaveBtn = styled.div`
 `;
 
 export const DfltVidBox = styled.div`
-    border-radius: 5%;
-    max-width: 230px;
+    border-radius: 2%;
+    // max-width: 230px;
+    width: 28%;
     padding: 2px;
     // height: 30%;
     // border-collapse: separate; 

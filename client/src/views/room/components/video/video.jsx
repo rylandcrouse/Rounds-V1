@@ -26,7 +26,7 @@ const Video = observer(({ id }) => {
             }
             console.log(store.io.streams[id])
 
-        }, 120);
+        }, 20);
 
         // videoRef.current.srcObject = store.io.streams[id]
     }, [])

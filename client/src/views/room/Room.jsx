@@ -1,26 +1,18 @@
 import { Observer, observer } from 'mobx-react-lite';
-import React, { useContext, useEffect, useRef } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Redirect } from 'react-router-dom';
 import { context } from '../../index';
 import Default from './components/default/Default';
-import { Container, RoomIdBox, Options, SideOpts, LeaveBtn, Content, PlayButton } from './styled';
+import { Container, RoomIdBox, Options, SideOpts, LeaveBtn, Content, PlayButton, } from './styled';
 import games from './games/';
+import TimeToGame from './components/timeToGame/TimeToGame';
 
 
 const Room = observer(() => {
     const store = useContext(context);
-    // const videoRef = useRef(null);
-
-
+    const room = store.io.room;
+    const [CDComplete, setCDComplete] = useState(false);
     useEffect(() => {
-        // videoRef.current.srcObject = store.io.media
-        // console.log(store.io.room.id)
-        // console.log(store.io.media)
-        console.log('**************')
-        console.log(store.io.streams)
-        console.log('**************')
-
-        console.log(Object.keys(store.io.streams))
     }, [store.io.room, store.io.media, store.io.streams])
 
     const handleStart = () => {
@@ -54,8 +46,11 @@ const Room = observer(() => {
 
             </Options>
             <Content>
-                {!store.io.room.game && <Default />}
-                {store.io.room.game && games[store.io.room.game.type]()}
+                {room && room.game && !CDComplete &&
+                    <TimeToGame setCDComplete={setCDComplete} />
+                }
+                {(!store.io.room.game || !CDComplete) && <Default />}
+                {store.io.room.game && CDComplete && games[store.io.room.game.type]()}
             </Content>
         </Container>
     )

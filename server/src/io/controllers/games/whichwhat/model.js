@@ -22,7 +22,7 @@ class WhichWhat {
         // 15 seconds from now it will start
         // this.startTime = Math.round(new Date() / 1000) + 15000;
 
-        const timeRef = new Date();
+        const timeRef = Date.now();
 
         // ten second count down to game start
         this.startTime = timeRef + 10000;
