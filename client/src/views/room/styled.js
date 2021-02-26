@@ -1,6 +1,12 @@
 import styled, { keyframes } from 'styled-components';
 import { Button as BSButton, FormControl } from 'react-bootstrap';
 
+export const PlayButton = styled.svg`
+    width: 1.5em;
+    height: 1.5em;
+    view-box: 0 0 16 16;
+    fill: current-color;
+`;
 
 const Grow = keyframes`
     0% {width: 1px;}

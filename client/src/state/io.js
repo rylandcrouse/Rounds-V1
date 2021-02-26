@@ -49,6 +49,10 @@ class Instance {
                 token: api.auth.getAccessToken()
             }
         })
+        this.socket.on('game_update', (gameState) => {
+            console.log('recieved game state')
+            this.room.game = gameState;
+        })
         this.socket.on('user_left', ({ userSocketId, newRoomState }) => {
             console.log('handling user_left for ' + userSocketId)
             delete this.streams[userSocketId];
@@ -180,6 +184,24 @@ class Instance {
             console.log(this.streams[this.socket.id]);
         })
         console.log(`My socket id is ${this.socket.id}`)
+    }
+
+    start = (gametype) => {
+        this.socket.emit('action', {
+            roomId: this.room.id,
+            gametype: gametype,
+            action: 'start',
+        })
+        console.log(`Signaled to start a game of ${gametype}...`);
+    }
+
+    guess = (text) => {
+        this.socket.emit('action', {
+            roomId: this.room.id,
+            gametype: this.room.game.gametype,
+            action: 'guess',
+            text
+        })
     }
 }
 

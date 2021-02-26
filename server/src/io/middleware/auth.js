@@ -8,10 +8,10 @@ const auth = async (socket, next, io) => {
     console.log('auth io middleware')
     // console.log(socket.adapter.sids)
     // console.log('io middlewre')
-    const user = jwt.verify(socket.handshake.query.token, config.JWT.ACCESS_SECRET);
-    if (!user) next(new Error('Authentication error'));
     if (socket.handshake.query && socket.handshake.query.token) {
         try {
+            const user = jwt.verify(socket.handshake.query.token, config.JWT.ACCESS_SECRET);
+            if (!user) next(new Error('Authentication error'));
             pubClient.get(`user_${user.userId}`, async (err, userFromRedis) => {
                 if (err) console.log('Error checking for user already online');
                 const parsedUFR = await JSON.parse(userFromRedis);

@@ -5,6 +5,8 @@ import { createAdapter } from "socket.io-redis";
 import auth from "./middleware/auth.js";
 import { nanoid } from 'nanoid'
 
+import games from './controllers/games/index.js'
+
 import { createRoom, joinRoom, sendOffer, sendAnswer, handleDisconnect, handleLeave } from './controllers/navigate.js';
 
 export const pubClient = redis.createClient(config.REDIS.port, config.REDIS.host, { auth_pass: config.REDIS.password });
@@ -64,6 +66,17 @@ const ioify = (server) => {
 
         socket.on('leaving', () => handleLeave(io, socket, pubClient));
         socket.on('disconnect', () => handleDisconnect(io, socket, pubClient));
+
+        // socket.on('start_game', (gametype) => handleStartGame(io, socket, pubClient, gametype));
+        // socket.on('start_game', (gametype) => games.WhichWhat.start(io, socket, pubClient, gametype))
+
+        socket.on('action', (payload) => games[payload['gametype']][payload['action']](io, socket, pubClient, payload))
+        // socket.on('action', (payload) => {
+        //     console.log(games[payload['gametype']][payload['action']])
+        //     console.log(payload)
+
+        // })
+
     });
     console.log('Attaching IO...');
     return io;

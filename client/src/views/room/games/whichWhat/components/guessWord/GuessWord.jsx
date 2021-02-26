@@ -19,7 +19,7 @@ const GuessActions = observer(({ gameHeight, actHeight }) => {
         <ActionBox actHeight={actHeight} gameHeight={gameHeight}>
             <ActionHistory>
                 {
-                    room.game.history.map(item => {
+                    room.game.gameHistory.map(item => {
                         switch (item.type) {
                             case 'guess':
                                 return <GuessItem key={Math.random()} />
