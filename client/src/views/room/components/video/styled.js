@@ -4,5 +4,4 @@ export const StyledVideo = styled.video`
     // heigth: 100%;
     width: 100%;
     border-radius: 4px;
-
 `;
