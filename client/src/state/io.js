@@ -65,7 +65,12 @@ class Instance {
             console.log(peer)
             peer.on('call', (call) => {
                 console.log('GOT CALL')
-                getUserMedia({ video: true, audio: true }, (stream) => {
+                getUserMedia({
+                    video: {
+                        width: 1280,
+                        height: 720
+                    }, audio: true
+                }, (stream) => {
                     call.answer(stream); // Answer the call with an A/V stream.
                     call.on('stream', (remoteStream) => {
                         console.log('GOT ANSWER')
@@ -149,7 +154,13 @@ class Instance {
         console.log(this)
         // const call = await this.peer.call('another-peers-id', this.streams[this.socket.id]);
         // console.log(call)
-        getUserMedia({ video: true, audio: true }, (stream) => {
+        getUserMedia({
+            video: {
+                width: 1280,
+                height: 720
+            },
+            audio: true
+        }, (stream) => {
             console.log(this)
             this.calls[socketId] = peer.call(socketId, stream);
             this.calls[socketId].on('stream', (remoteStream) => {

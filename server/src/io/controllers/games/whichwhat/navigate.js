@@ -15,5 +15,5 @@ export const start = async (io, socket, redis, action) => {
 
     const strRoom = JSON.stringify(roomParsed);
     redis.set(roomParsed.id, strRoom);
-    console.log(roomParsed);
+    console.log(roomParsed.game);
 }

@@ -1,9 +1,8 @@
 import { observer } from 'mobx-react-lite';
 import React, { useContext, useEffect, useRef } from 'react'
 import { context } from '../../../../../../index';
-import Video from '../../../../components/video/video';
 import { GuessersBox, GuesserVidBox } from './styled';
-
+import Guesser from './Guesser';
 
 const WhichWhat = observer(({ gameHeight }) => {
     const store = useContext(context);
@@ -16,12 +15,7 @@ const WhichWhat = observer(({ gameHeight }) => {
 
     return (
         <GuessersBox gameHeight={gameHeight}>
-            {Object.keys(store.io.streams).map(id => <GuesserVidBox key={Math.random()}><Video id={id} key={Math.random()} /></GuesserVidBox>)}
-            {/* {Object.keys(store.io.streams).map(id => <GuesserVidBox key={id}><Video id={id} key={id} /></GuesserVidBox>)} */}
-            {Object.keys(store.io.streams).map(id => <GuesserVidBox key={Math.random()}><Video id={id} key={Math.random()} /></GuesserVidBox>)}
-            {Object.keys(store.io.streams).map(id => <GuesserVidBox key={Math.random()}><Video id={id} key={Math.random()} /></GuesserVidBox>)}
-            {Object.keys(store.io.streams).map(id => <GuesserVidBox key={Math.random()}><Video id={id} key={Math.random()} /></GuesserVidBox>)}
-
+            {Object.keys(store.io.streams).map(id => <Guesser playerSocketId={id} />)}
         </GuessersBox>
     )
 });

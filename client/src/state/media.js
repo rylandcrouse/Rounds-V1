@@ -11,7 +11,8 @@ export const getStream = async () => {
     try {
         const stream = await openMediaDevices({
             'video': {
-                'aspectRatio': 1.3333333
+                width: 1280,
+                height: 720
             },
             'audio': {
                 'echoCancellation': true,
@@ -22,7 +23,7 @@ export const getStream = async () => {
         });
         console.log('Got MediaStream:', stream);
         return stream;
-    } catch(error) {
+    } catch (error) {
         console.error('Error accessing media devices.', error);
     }
 }

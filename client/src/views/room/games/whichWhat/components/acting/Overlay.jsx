@@ -2,14 +2,14 @@ import { observer } from 'mobx-react-lite';
 import React, { useContext, useEffect, useRef } from 'react'
 import { context } from '../../../../../../index';
 import Video from '../../../../components/video/video';
-import { ActingBox } from './styled';
-import Overlay from './Overlay'
+import { Banner, Overlay } from './styled';
+// import { ResizeObserver } from 'resize-observer';
 
 
-const Acting = observer(({ setActHeight, gameHeight }) => {
+const Acting = observer(({ actingState }) => {
     const store = useContext(context);
     const room = store.io.room;
-    const actingState = Object.values(room.game.playerStates)[room.game.turn.player]
+
     useEffect(() => {
         console.log(actingState)
         return () => {
@@ -18,10 +18,14 @@ const Acting = observer(({ setActHeight, gameHeight }) => {
     }, [])
 
     return (
-        <ActingBox id="actingBox" gameHeight={gameHeight} key={Math.random()}>
-            <Overlay actingState={actingState} />
-            <Video className="acting" id={actingState.socketId} />
-        </ActingBox>
+        <Overlay>
+            <div>hello</div>
+            <div>hello</div>
+            {actingState && <Banner bg={actingState.color}>
+                hello
+            </Banner>}
+
+        </Overlay>
     )
 });
 

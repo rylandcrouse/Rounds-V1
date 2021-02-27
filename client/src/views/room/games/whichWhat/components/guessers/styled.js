@@ -1,28 +1,18 @@
 import styled from 'styled-components';
 
 export const GuesserVidBox = styled.div`
-    // border-radius: 1%;
     width: 100%;
-    // padding: 1px;
-    // flex-shrink: 1;
+    position: relative;
+    // border: 2px solid green;
 `;
 
+
 export const GuessersBox = styled.div`
-    // margin: 0.2em;
-    // width: 12%;
     max-height: ${props => props.gameHeight}px;
-    margin-right: 0.12em;
+    margin-right: 0.13em;
+    // border: 1px solid red;
 
     display: grid;
-    grid-template-row: 20% 20% 20% 20% 20%;
-    // flex-direction: column;
-    // align-items: center;
-    // justify-content: space-around;
+    grid-template-rows: 20% 20% 20% 20% 20%;
 
-    // @media (min-width: 1065px) {
-    //     width: 20%;
-    //     height: ${100 / 7}%;
-    //     flex-flow: column nowrap;
-    //     margin-right: 0.7em;
-    // }
 `;

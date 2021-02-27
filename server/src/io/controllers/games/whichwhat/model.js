@@ -2,7 +2,7 @@ import words from './words.js';
 
 class WhichWhat {
     type = 'WhichWhat';
-    colors = ['#c51111', '#132ed1', '#117f2d', '#ef7d0d', '#6g2fbb'];
+    colors = ['#ffa319', '#d8de26', '#25b04a', '#c90ff2', '#2b4fff'];
     turn = null;
     startTime = null;
 
@@ -15,7 +15,9 @@ class WhichWhat {
         { socketId: 127012, text: 'fishing', correct: false, type: 'guess' },
     ];
 
-    playerStates = [];
+    playerStates = {
+
+    };
 
 
     constructor(roomInstance) {
@@ -28,18 +30,21 @@ class WhichWhat {
         this.startTime = timeRef + 10000;
 
         roomInstance.players.map(player => {
-            this.playerStates.push({
+            this.playerStates[player.socketId] = {
                 color: this.colors.pop(),
                 score: 0,
                 socketId: player.socketId
-            })
+            }
         })
+        console.log('&&&&&&&&&&&&&&')
+        console.log(this.playerStates)
+        console.log('&&&&&&&&&&&&&&')
 
         this.turn = {
 
             // 5 seconds between turns
             startTime: timeRef + 15000,
-
+            player: 0,
             // 45 seconds to act
             endTime: new Date() + 60000,
             word: words[Math.floor(Math.random() * words.length)],

@@ -4,7 +4,7 @@ export const GamePortion = styled.div`
     max-height: 97%;
     width: 95%;
     display: grid;
-    grid-template-columns: 14.5% 60.5% 23%;
+    grid-template-columns: 12.3% 60.5% 25%;
 `;
 
 export const Container = styled.div`

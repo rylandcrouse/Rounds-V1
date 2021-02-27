@@ -32,7 +32,7 @@ export const InputGuess = styled.input`
 
 export const ActionBox = styled.div`
     height: ${props => props.actHeight * 0.9}px;
-    max-height: 99%;
+    max-height: 100%;
     border-radius: 1px;
     // padding: 0.5em 0;
     background-color: #e9e9e9;
