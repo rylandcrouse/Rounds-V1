@@ -19,16 +19,13 @@ const Overlay = observer(({ playerState }) => {
 
     return (
         <OverlayGrid>
-            <div></div>
-            <div></div>
-            <Bottom>
-                <Banner bg={playerState.color}>
-                    Score: {playerState.score}
-                </Banner>
-                {/* <Info>
 
-                </Info> */}
-            </Bottom>
+            <Info>
+                {playerState.score}
+            </Info>
+            < Banner bg={playerState.color} >
+
+            </Banner >
         </OverlayGrid>
     )
 });

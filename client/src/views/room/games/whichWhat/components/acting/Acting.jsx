@@ -2,8 +2,8 @@ import { observer } from 'mobx-react-lite';
 import React, { useContext, useEffect, useRef } from 'react'
 import { context } from '../../../../../../index';
 import Video from '../../../../components/video/video';
-import { ActingBox } from './styled';
-import Overlay from './Overlay'
+import { ActingBox, Info, SideOpts, Word } from './styled';
+import Overlay from './../overlay/Overlay'
 
 
 const Acting = observer(({ setActHeight, gameHeight }) => {
@@ -19,7 +19,18 @@ const Acting = observer(({ setActHeight, gameHeight }) => {
 
     return (
         <ActingBox id="actingBox" gameHeight={gameHeight} key={Math.random()}>
-            <Overlay actingState={actingState} />
+            <Info>
+                <SideOpts>
+
+                </SideOpts>
+
+                <Word>{room.game.turn.word}</Word>
+
+                <SideOpts>
+
+                </SideOpts>
+            </Info>
+            <Overlay playerState={actingState} />
             <Video className="acting" id={actingState.socketId} />
         </ActingBox>
     )

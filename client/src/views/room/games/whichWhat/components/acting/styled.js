@@ -1,24 +1,34 @@
 import styled from 'styled-components';
 
 export const ActingBox = styled.div`
-    // width: 56%;
-    // max-height: 100%;
-    // width: ${props => props.gameHeight / 8 * 5}px;
-    // max-height: ${props => props.gameHeight}px;
     position: relative;
 `;
 
-export const Overlay = styled.div`
+export const Info = styled.div`
     position: absolute;
     width: 100%;
-    height: 100%;
-    display: grid;
-    grid-template-rows: 17% 80% 3%;
+    height: 15%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 `;
 
-export const Banner = styled.div`
-    width: 100%;
-    background-color: ${props => props.bg};
-    // background-color: black;
-    // border-radius: 15px 15px 0% 0%;
+export const Word = styled.div`
+    display: flex;
+    align-items: center;
+    height: 65%;
+    border-radius: 8px;
+    background-color: black;
+    opacity: 80%;
+    font-size: 1.3em;
+    padding: 0.1em 0.5em;
+    color: white;
 `;
+
+export const SideOpts = styled.div`
+    flex: 1;
+    display: flex;
+    align-items: center;
+`;
+
+

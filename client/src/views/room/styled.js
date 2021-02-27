@@ -76,15 +76,12 @@ export const SideOpts = styled.div`
 
 export const Content = styled.div`
     width:100%;
-    height: 85%;
-    min-width: 1280px;
-    // border: 1px solid black;
+    height: 90%;
     border-radius: 5px;
-    // margin: 1px;
     position: relative;
-
+    min-width: 610px;
     display: flex;
-    // flex-direction: column;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
 `;
