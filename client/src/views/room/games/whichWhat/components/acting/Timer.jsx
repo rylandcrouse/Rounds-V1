@@ -6,30 +6,31 @@ import { ActingBox, Info, SideOpts, Word } from './styled';
 import Overlay from './../overlay/Overlay'
 
 
-const Timer = observer(() => {
+const Timer = observer(({turnState}) => {
     const store = useContext(context);
     const room = store.io.room;
-    const actingState = room.game.playerStates[room.game.turn.player]
-    const [toEnd, setToEnd] = useState(calcTimeUntil(store.io.room.game.turn.endTime));
-    const [toStart, setToStart] = useState(calcTimeUntil(store.io.room.game.turn.startTime));
+    const [toEnd, setToEnd] = useState(calcTimeUntil(turnState.endTime));
+    const [toStart, setToStart] = useState(calcTimeUntil(turnState.startTime));
 
     useEffect(() => {
         const timer = setInterval(() => {
-            const leftToStart = calcTimeUntil(store.io.room.game.turn.startTime)
+            console.log('rerender TIMER')
+
+            const leftToStart = calcTimeUntil(turnState.startTime)
             setToStart(leftToStart);
 
-            const leftToEnd = calcTimeUntil(store.io.room.game.turn.endTime)
+            const leftToEnd = calcTimeUntil(turnState.endTime)
             setToEnd(leftToEnd);
 
-            if (leftToEnd < 0 && store.io.socket.id === room.game.turn.player) {
+            if (leftToEnd < 0 && store.io.socket.id === turnState.player) {
                 store.io.passTurn();
-                console.log('.........')
+           
             }
         }, 1000);
         return () => {
             return clearInterval(timer);
         }
-    }, [room.game.turn.player])
+    }, [turnState])
 
     function calcTimeUntil(time) {
         return Math.floor((time - Date.now()) / 1000);
@@ -37,7 +38,7 @@ const Timer = observer(() => {
 
     return (
         <Word>
-            {toStart < 0 && store.io.socket.id === room.game.turn.player && room.game.turn.word}
+            {toStart < 0 && store.io.socket.id === turnState.player && turnState.word}
             {' '}
             {toStart > 0 && toStart}
             {toEnd > 0 && toStart < 0 && toEnd}

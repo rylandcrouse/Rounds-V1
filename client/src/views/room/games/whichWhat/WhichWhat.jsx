@@ -17,6 +17,11 @@ const WhichWhat = observer(() => {
     const room = store.io.room;
     const [gameHeight, setGameHeight] = useState()
     const [actHeight, setActHeight] = useState()
+    
+    useEffect(() => {
+        console.log('WWWWW rerender')
+    })
+
 
     // if (!store.io.room) return <Redirect to='/home' />
 

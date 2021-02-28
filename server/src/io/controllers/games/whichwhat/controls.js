@@ -26,15 +26,15 @@ export const next = async (io, socket, redis, action) => {
     }
 
     const timeRef = Date.now();
-
-
+    
+    
     if (arePartialRoundsLeft && areTurnsLeft) {
         const playerKeys = Object.keys(currentGame.playerStates)
         const nextTurn = {
             player: playerKeys[playerKeys.indexOf(currentGame.turn.player) + 1],
             startTime: timeRef + 5000,
             // 45 seconds to act
-            endTime: timeRef + 1000,
+            endTime: timeRef + 10000,
             word: words[Math.floor(Math.random() * words.length)],
             guessed: 0
         }
@@ -42,6 +42,34 @@ export const next = async (io, socket, redis, action) => {
             ...currentGame,
             turn: nextTurn
         }
+        roomParsed.game = updatedGame
+        const strRoom = JSON.stringify(roomParsed)
+        redis.set(roomParsed.id, strRoom)
+        console.log('new players turn ' + nextTurn.player)
+        io.to(roomParsed.id).emit('game_update', updatedGame);
+        console.log('Next turn socketId is ' + nextTurn.player)
+    }
+
+    if (arePartialRoundsLeft && !areTurnsLeft) {
+
+        const playerKeys = Object.keys(currentGame.playerStates)
+        const nextTurn = {
+            player: playerKeys[0],
+            startTime: timeRef + 5000,
+            // 45 seconds to act
+            endTime: timeRef + 10000,
+            word: words[Math.floor(Math.random() * words.length)],
+            guessed: 0
+        }
+        currentGame.currentIter++;
+        const updatedGame = {
+            ...currentGame,
+            currentIter: currentGame.currentIter + 1,
+            turn: nextTurn
+        }
+        roomParsed.game = updatedGame
+        const strRoom = JSON.stringify(roomParsed)
+        redis.set(roomParsed.id, strRoom)
         console.log('new players turn ' + nextTurn.player)
         io.to(roomParsed.id).emit('game_update', updatedGame);
         console.log('Next turn socketId is ' + nextTurn.player)

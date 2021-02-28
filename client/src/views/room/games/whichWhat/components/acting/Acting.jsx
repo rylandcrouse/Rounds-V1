@@ -7,20 +7,24 @@ import Overlay from './../overlay/Overlay'
 import Timer from './Timer';
 
 
-const Acting = observer(({ setActHeight, gameHeight }) => {
+const Acting = observer(() => {
     const store = useContext(context);
     const room = store.io.room;
     const actingState = room.game.playerStates[room.game.turn.player]
+    const turnState = store.io.room.game.turn
 
+    useEffect(() => {
+        console.log('rerender')
+    }, [])
 
     return (
-        <ActingBox id="actingBox" gameHeight={gameHeight} key={Math.random()}>
+        <ActingBox id="actingBox" key={Math.random()}>
             <Info>
                 <SideOpts>
 
                 </SideOpts>
 
-                <Timer />
+                <Timer turnState={turnState}/>
 
                 <SideOpts>
 
