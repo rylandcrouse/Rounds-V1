@@ -28,7 +28,7 @@ export const next = async (io, socket, redis, action) => {
     const timeRef = Date.now();
     
     
-    if (arePartialRoundsLeft && areTurnsLeft) {
+    if ((arePartialRoundsLeft && areTurnsLeft) || !arePartialRoundsLeft && areTurnsLeft) {
         const playerKeys = Object.keys(currentGame.playerStates)
         const nextTurn = {
             player: playerKeys[playerKeys.indexOf(currentGame.turn.player) + 1],
