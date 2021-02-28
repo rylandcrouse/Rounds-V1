@@ -1,7 +1,7 @@
 import words from './words.js';
 
 class WhichWhat {
-    type = 'WhichWhat';
+    gametype = 'WhichWhat';
     colors = ['#ffa319', '#d8de26', '#25b04a', '#c90ff2', '#2b4fff'];
     turn = null;
     startTime = null;
@@ -44,9 +44,9 @@ class WhichWhat {
 
             // 5 seconds between turns
             startTime: timeRef + 15000,
-            player: 0,
+            player: Object.keys(this.playerStates)[0],
             // 45 seconds to act
-            endTime: new Date() + 60000,
+            endTime: timeRef + 20000,
             word: words[Math.floor(Math.random() * words.length)],
             guessed: 0
         }

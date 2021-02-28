@@ -51,7 +51,10 @@ class Instance {
         })
         this.socket.on('game_update', (gameState) => {
             console.log('recieved game state')
-            this.room.game = gameState;
+            runInAction(() => {
+                this.room.game = gameState;
+
+            })
         })
         this.socket.on('user_left', ({ userSocketId, newRoomState }) => {
             console.log('handling user_left for ' + userSocketId)
@@ -213,6 +216,15 @@ class Instance {
             action: 'guess',
             text
         })
+    }
+
+    passTurn = () => {
+        console.log('manual turn pass')
+        this.socket.emit('action', {
+            roomId: this.room.id,
+            gametype: this.room.game.gametype,
+            action: 'next',
+        });
     }
 }
 

@@ -70,12 +70,12 @@ const ioify = (server) => {
         // socket.on('start_game', (gametype) => handleStartGame(io, socket, pubClient, gametype));
         // socket.on('start_game', (gametype) => games.WhichWhat.start(io, socket, pubClient, gametype))
 
-        socket.on('action', (payload) => games[payload['gametype']][payload['action']](io, socket, pubClient, payload))
-        // socket.on('action', (payload) => {
-        //     console.log(games[payload['gametype']][payload['action']])
-        //     console.log(payload)
+        socket.on('action', (payload) => {
+            console.log(payload['gametype'])
+            console.log(payload)
 
-        // })
+        })
+        socket.on('action', (payload) => games[payload['gametype']][payload['action']](io, socket, pubClient, payload))
 
     });
     console.log('Attaching IO...');

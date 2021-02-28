@@ -50,7 +50,7 @@ const Room = observer(() => {
                     <TimeToGame setCDComplete={setCDComplete} />
                 }
                 {(!store.io.room.game || !CDComplete) && <Default />}
-                {store.io.room.game && CDComplete && games[store.io.room.game.type]()}
+                {store.io.room.game && CDComplete && games[store.io.room.game.gametype]()}
             </Content>
         </Container>
     )

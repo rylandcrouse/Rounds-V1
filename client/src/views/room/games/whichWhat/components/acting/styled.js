@@ -16,12 +16,12 @@ export const Info = styled.div`
 export const Word = styled.div`
     display: flex;
     align-items: center;
-    height: 65%;
+    height: 60%;
     border-radius: 8px;
     background-color: black;
     opacity: 80%;
-    font-size: 1.3em;
-    padding: 0.1em 0.5em;
+    font-size: 1.9vmin;
+    padding: 0.15em 0.5em;
     color: white;
 `;
 
