@@ -44,7 +44,7 @@ console.log(Object.keys(currentGame.playerStates).length)
 console.log(currentGame.turn.guessed.length-1)
         console.log('^^^^^^^^^^^^^^')
 
-        if (Object.keys(currentGame.playerStates).length === (currentGame.turn.guessed.length-1)) {
+        if (Object.keys(currentGame.playerStates).length-1 === (currentGame.turn.guessed.length)) {
             return next(io, socket, redis, action);
         }
 
