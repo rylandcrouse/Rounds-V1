@@ -90,7 +90,7 @@ export const next = async (io, socket, redis, action) => {
             // 45 seconds to act
             endTime: timeRef + 50000,
             word: words[Math.floor(Math.random() * words.length)],
-            guessed: 0
+            guessed: []
         }
         const updatedGame = {
             ...currentGame,
@@ -113,7 +113,7 @@ export const next = async (io, socket, redis, action) => {
             // 45 seconds to act
             endTime: timeRef + 60000,
             word: words[Math.floor(Math.random() * words.length)],
-            guessed: 0
+            guessed: []
         }
         currentGame.currentIter++;
         const updatedGame = {
