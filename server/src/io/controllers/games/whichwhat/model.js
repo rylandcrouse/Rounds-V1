@@ -8,7 +8,7 @@ class WhichWhat {
 
 
     // everyone acts 3 times total
-    maxRounds = 3;
+    maxRounds = 1;
     currentIter = 1;
 
     gameHistory = [

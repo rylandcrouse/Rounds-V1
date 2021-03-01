@@ -6,11 +6,11 @@ import { Countdown } from './styled';
 
 const TimeToGame = observer(({ setCDComplete }) => {
     const store = useContext(context);
-    const [timeLeft, setTimeLeft] = useState(calcTimeToGame());
+    const [timeLeft, setTimeLeft] = useState();
 
     useEffect(() => {
         const timer = setInterval(() => {
-            if (!store.io.room.game) return
+            if (!store.io.room.game) return setCDComplete(false)
 
             // if (!store.io.room) setCDComplete(true)
             const left = calcTimeToGame()
