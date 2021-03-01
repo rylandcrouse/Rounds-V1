@@ -36,11 +36,12 @@ export const guess = async (io, socket, redis, action) => {
     
         roomParsed.game = currentGame
         const strRoom = JSON.stringify(roomParsed);
-        console.log("#########################")
-        console.log(strRoom)
-        console.log("#########################")
         redis.set(roomParsed.id, strRoom);
         io.to(roomParsed.id).emit('game_update', currentGame)
+
+        if (roomParsed.players.length === currentGame.turn.guessed.length) {
+            return endGame(io, socket, redis, action);
+        }
 
     }
 
@@ -54,6 +55,8 @@ export const endGame = async (io, socket, redis, action) => {
     const roomFromRedis = await getRedis(action.roomId);
     const roomParsed = await JSON.parse(roomFromRedis);
     console.log('game ending')
+
+    io.to(roomParsed.id).emit('game_update', null)
 
 }
 
