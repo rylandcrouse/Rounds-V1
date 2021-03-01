@@ -18,7 +18,7 @@ export const InputGuess = styled.input`
     width: 100%;
     border-color: #f0f0f0;
     height: 8%;
-    font-size: 1rem;
+    font-size: 1.5vmin;
     border-radius: 0%;
     border: none;
     background-color: #ededed;

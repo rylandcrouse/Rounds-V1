@@ -1,9 +1,10 @@
 import { start } from './navigate.js'
-import { next } from './controls.js';
+import { next, guess } from './controls.js';
 
 const controls = {
     start,
-    next
+    next,
+    guess
 }
 
 export default controls;

@@ -46,9 +46,9 @@ class WhichWhat {
             startTime: timeRef + 15000,
             player: Object.keys(this.playerStates)[0],
             // 45 seconds to act
-            endTime: timeRef + 20000,
+            endTime: timeRef + 45000,
             word: words[Math.floor(Math.random() * words.length)],
-            guessed: 0
+            guessed: []
         }
     }
 }
