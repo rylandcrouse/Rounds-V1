@@ -10,9 +10,16 @@ const TimeToGame = observer(({ setCDComplete }) => {
 
     useEffect(() => {
         const timer = setInterval(() => {
-            if (!store.io.room) setCDComplete(true)
+            if (!store.io.room.game) return
+
+            // if (!store.io.room) setCDComplete(true)
             const left = calcTimeToGame()
-            if (left < 0 || !store.io.room) setCDComplete(true)
+            if (left < 0) {
+                setCDComplete(true)
+            } else {
+                setCDComplete(false)
+
+            }
             setTimeLeft(left);
         }, 1000);
         return () => {
@@ -26,9 +33,12 @@ const TimeToGame = observer(({ setCDComplete }) => {
 
     return (
         <>
+        {
+            timeLeft > 0 &&
             <Countdown>
                 Game starting in {timeLeft}
             </Countdown>
+        }
         </>
     )
 });

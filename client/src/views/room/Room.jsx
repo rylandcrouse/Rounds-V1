@@ -46,7 +46,7 @@ const Room = observer(() => {
 
             </Options>
             <Content>
-                {room && room.game && !CDComplete &&
+                {room && room.game &&
                     <TimeToGame setCDComplete={setCDComplete} />
                 }
                 {(!store.io.room.game || !CDComplete) && <Default />}
