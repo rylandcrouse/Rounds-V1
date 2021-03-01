@@ -83,7 +83,7 @@ export const next = async (io, socket, redis, action) => {
             player: playerKeys[playerKeys.indexOf(currentGame.turn.player) + 1],
             startTime: timeRef + 5000,
             // 45 seconds to act
-            endTime: timeRef + 35000,
+            endTime: timeRef + 50000,
             word: words[Math.floor(Math.random() * words.length)],
             guessed: 0
         }
@@ -106,7 +106,7 @@ export const next = async (io, socket, redis, action) => {
             player: playerKeys[0],
             startTime: timeRef + 5000,
             // 45 seconds to act
-            endTime: timeRef + 35000,
+            endTime: timeRef + 60000,
             word: words[Math.floor(Math.random() * words.length)],
             guessed: 0
         }
