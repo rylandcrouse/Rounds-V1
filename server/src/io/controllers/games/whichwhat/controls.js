@@ -40,7 +40,7 @@ export const guess = async (io, socket, redis, action) => {
         io.to(roomParsed.id).emit('game_update', currentGame)
 
         if (roomParsed.players.length === currentGame.turn.guessed.length) {
-            return endGame(io, socket, redis, action);
+            return next(io, socket, redis, action);
         }
 
     }
