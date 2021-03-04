@@ -11,7 +11,7 @@ const DefaultView = observer(() => {
 
     return (
         <DefaultVideos id='DfltVideos'>
-            {Object.keys(store.io.streams).map(id => <DfltVidBox key={id}><Video id={id} key={id} /></DfltVidBox>)}
+            {Object.keys(store.io.streams).map(id => <DfltVidBox key={Math.random()}><Video id={id} key={id} /></DfltVidBox>)}
 
 
         </DefaultVideos>
