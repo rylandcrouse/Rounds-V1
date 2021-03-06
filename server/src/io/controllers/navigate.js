@@ -4,6 +4,7 @@ import Room from './../models/room.js';
 import getFromRedis from './helpers/getFromRedis.js'
 import { promisify } from 'util';
 // const getRedis = promisify(client.get).bind(client);
+import games from './games/index.js'
 
 
 import userRef from '../../authentication/models/user.js'
@@ -146,6 +147,7 @@ export const handleDisconnect = async (io, socket, redis) => {
 
 export const handleLeave = async (io, socket, redis) => {
 
+
     console.log(`handling leave for ${socket.id}`)
     const redisGet = promisify(redis.get).bind(redis);
 
@@ -161,12 +163,12 @@ export const handleLeave = async (io, socket, redis) => {
     if (!userParsed || !userParsed.currentRoom) return
 
     const currentRoomState = await redisGet(userParsed.currentRoom)
-    // console.log(currentRoomState);
 
     let parsedRoom = await JSON.parse(currentRoomState)
 
+    
     socket.leave(parsedRoom.id);
-
+    
     console.log('^^^^^^^^^^^^^^^^^^^^^')
     console.log(parsedRoom)
     console.log(parsedRoom.players.map(x => x.socketId !== userParsed.socketId))
@@ -174,13 +176,14 @@ export const handleLeave = async (io, socket, redis) => {
         ...parsedRoom,
         players: parsedRoom.players.filter(player => player.socketId !== userParsed.socketId)
     }
-
+    
     const newRoomStringified = JSON.stringify(newRoomState);
-
+    
     redis.set(userParsed.currentRoom, newRoomStringified);
-
+    games[parsedRoom.game.gametype].handleLeave(io, socket, redis, newRoomState)
+    
     io.to(userParsed.currentRoom).emit('user_left', { userSocketId: userParsed.socketId, newRoomState })
-
+    
     console.log(newRoomState)
 
     console.log('^^^^^^^^^^^^^^^^^^^^^')
