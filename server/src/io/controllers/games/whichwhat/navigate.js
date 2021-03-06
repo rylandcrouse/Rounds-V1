@@ -23,7 +23,7 @@ export const handleLeave = async (io, socket, redis, roomState) => {
     const getRedis = promisify(redis.get).bind(redis);
     
     
-    roomState.game.players = roomState.game.players.filter(
+    roomState.game.playerStates = roomState.game.playerStates.filter(
         player => player.socketId !== socket.id
         )
         
