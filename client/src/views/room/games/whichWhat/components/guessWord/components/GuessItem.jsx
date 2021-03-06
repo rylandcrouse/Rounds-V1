@@ -5,7 +5,7 @@ import Video from '../../../../../components/video/video';
 import { GuessItemBox } from './styled';
 
 
-const GuessItem = observer(({guess}) => {
+const GuessItem = observer(({action}) => {
     const store = useContext(context);
     const room = store.io.room;
     // const videoRef = useRef(null);
@@ -16,7 +16,7 @@ const GuessItem = observer(({guess}) => {
     
     return (
         <GuessItemBox>
-            hello
+            {action.text}
         </GuessItemBox>
     )
 });

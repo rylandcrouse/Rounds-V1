@@ -36,7 +36,7 @@ const GuessActions = observer(({ gameHeight, actHeight }) => {
                     room.game.gameHistory.map(item => {
                         switch (item.type) {
                             case 'guess':
-                                return <GuessItem key={Math.random()} />
+                                return <GuessItem action={item} key={Math.random()} />
                             default:
                                 return null;
                         }

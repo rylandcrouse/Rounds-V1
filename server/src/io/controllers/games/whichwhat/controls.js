@@ -12,8 +12,18 @@ export const guess = async (io, socket, redis, action) => {
     const timeRef = Date.now();
 
     const currentGame = roomParsed.game;
+
+    const historyGuess = {
+        socketId: socket.id,
+        text: action.text,
+        correct: false,
+        type: 'guess'
+    }
+    currentGame.gameHistory.push(historyGuess)
+
     if (action.text.toLowerCase() === currentGame.turn.word.toLowerCase()) {
         // word correct
+        historyGuess.correct = true;
 
         
         currentGame.turn.guessed.push(socket.id);
@@ -33,7 +43,7 @@ export const guess = async (io, socket, redis, action) => {
         currentGame.playerStates[currentGame.turn.player].score += actingPoints
         console.log(currentGame.playerStates[socket.id].score)
 
-    
+
         roomParsed.game = currentGame
         const strRoom = JSON.stringify(roomParsed);
         redis.set(roomParsed.id, strRoom);
