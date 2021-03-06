@@ -49,21 +49,16 @@ export const Container = styled.div`
     width: 100vw;
     height: 100vh;
 
-    // display: flex;
-    // flex-direction: column;
-    // align-items: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 `;
 
 export const Options = styled.div`
     width: 100%;
     height: 7%;
-    // border: 1px solid black;
     border-radius: 5px;
-    // margin: 2px;
-    // padding: 0.1em;
-
     display: flex;
-    // flex-direction: column;
     align-items: center;
     justify-content: center;
 `;
@@ -130,15 +125,6 @@ export const LeaveBtn = styled.div`
 
 export const DfltVidBox = styled.div`
     border-radius: 2%;
-    // max-width: 230px;
     width: 28%;
-    padding: 2px;
-    // height: 30%;
-    // border-collapse: separate; 
-    // margin: 2px;
-
-    // @media (max-width: 780px) {
-    //     max-width: 28%;
-    //   }
-    
+    padding: 2px;  
 `;

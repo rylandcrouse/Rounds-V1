@@ -1,4 +1,4 @@
-import { Observer, observer } from 'mobx-react-lite';
+import { observer } from 'mobx-react-lite';
 import React, { useContext, useEffect, useState } from 'react'
 import { Redirect } from 'react-router-dom';
 import { context } from '../../index';
