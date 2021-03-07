@@ -58,9 +58,11 @@ class Instance {
         })
         this.socket.on('user_left', ({ userSocketId, newRoomState }) => {
             console.log('handling user_left for ' + userSocketId)
-            delete this.streams[userSocketId];
-            delete this.calls[userSocketId];
-            this.room = newRoomState;
+            runInAction(()=> {
+                delete this.streams[userSocketId];
+                delete this.calls[userSocketId];
+                this.room = newRoomState;
+            })
         })
         this.socket.on('connect', () => {
             console.log('connected');
@@ -114,7 +116,9 @@ class Instance {
         })
         this.socket.on('user_joined', ({ userSocketId, roomState }) => {
             console.log(`${userSocketId} joined.`)
-            this.room = roomState
+            runInAction(() => {
+                this.room = roomState;
+            })
             if (userSocketId !== this.socket.id) {
                 this.callPeer(userSocketId)
             }
