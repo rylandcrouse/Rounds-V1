@@ -17,8 +17,11 @@ const Acting = observer(() => {
         console.log('rerender')
     }, [])
 
-    return (
-        <ActingBox id="actingBox" key={Math.random()}>
+    return ( 
+        <>
+      { actingState &&
+      <>
+           <ActingBox id="actingBox" key={Math.random()}>
             <Info>
                 <SideOpts>
 
@@ -33,6 +36,9 @@ const Acting = observer(() => {
             <Overlay playerState={actingState} />
             <Video className="acting" id={actingState.socketId} />
         </ActingBox>
+        </>
+    }
+    </>
     )
 });
 
