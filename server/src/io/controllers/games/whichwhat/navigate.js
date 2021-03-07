@@ -24,12 +24,13 @@ export const handleLeave = async (io, socket, redis, roomState) => {
     
     
     delete roomState.game.playerStates[socket.id]
+    const strRoom = JSON.stringify(roomState)
     
-    redis.set(roomState.id, roomState)
+    redis.set(roomState.id, strRoom)
     // If player leaving is current actor
     
     io.to(roomState.id, roomState.game)
-    
+
     if (socket.id === roomState.game.turn.player) {
         next(io, socket, redis, {
             roomId: roomState.id,
