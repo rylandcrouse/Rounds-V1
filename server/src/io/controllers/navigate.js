@@ -183,7 +183,7 @@ export const handleLeave = async (io, socket, redis) => {
 
     if (parsedRoom.game) {
         games[parsedRoom.game.gametype].handleLeave(io, socket, redis, newRoomState)
-        
+    }
     
     io.to(userParsed.currentRoom).emit('user_left', { userSocketId: userParsed.socketId, newRoomState })
     
