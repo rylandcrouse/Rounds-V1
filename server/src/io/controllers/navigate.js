@@ -180,7 +180,10 @@ export const handleLeave = async (io, socket, redis) => {
     const newRoomStringified = JSON.stringify(newRoomState);
     
     redis.set(userParsed.currentRoom, newRoomStringified);
-    games[parsedRoom.game.gametype].handleLeave(io, socket, redis, newRoomState)
+
+    if (parsedRoom.game) {
+        games[parsedRoom.game.gametype].handleLeave(io, socket, redis, newRoomState)
+        
     
     io.to(userParsed.currentRoom).emit('user_left', { userSocketId: userParsed.socketId, newRoomState })
     
