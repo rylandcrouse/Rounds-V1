@@ -29,13 +29,13 @@ export const handleLeave = async (io, socket, redis, roomState) => {
         
         redis.set(roomState.id, roomState)
         // If player leaving is current actor
+        
+        io.to(roomState.id, roomState.game)
         if (socket.id === roomState.game.turn.player) {
             next(io, socket, redis, {
                 roomId: roomState.id,
                 
             });
         }
-        
-        io.to(roomState.id, roomState.game)
 
 }
