@@ -23,19 +23,18 @@ export const handleLeave = async (io, socket, redis, roomState) => {
     const getRedis = promisify(redis.get).bind(redis);
     
     
-    roomState.game.playerStates = roomState.game.playerStates.filter(
-        player => player.socketId !== socket.id
-        )
-        
-        redis.set(roomState.id, roomState)
-        // If player leaving is current actor
-        
-        io.to(roomState.id, roomState.game)
-        if (socket.id === roomState.game.turn.player) {
-            next(io, socket, redis, {
-                roomId: roomState.id,
-                
-            });
-        }
+    delete roomState.game.playerStates[socket.id]
+    
+    redis.set(roomState.id, roomState)
+    // If player leaving is current actor
+    
+    io.to(roomState.id, roomState.game)
+    
+    if (socket.id === roomState.game.turn.player) {
+        next(io, socket, redis, {
+            roomId: roomState.id,
+            
+        });
+    }
 
 }
