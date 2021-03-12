@@ -6,7 +6,6 @@ const io = {
     port: process.env.REACT_APP_IO_PORT || process.env.PORT
 }
 
-console.log(io)
 
 const auth = {
     host: process.env.REACT_APP_AUTH_HOST || '0.0.0.0',

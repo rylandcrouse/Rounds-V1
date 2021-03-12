@@ -6,7 +6,7 @@ class Auth {
 
     constructor() {
         this.axiosInstance = axios.create({
-            baseURL: `http://${config.auth.host}:${config.auth.port}`,
+            baseURL: `/`,
             timeout: 30000,
             // Attaches refresh token in header to retrieve further access tokens
             headers: { Authorization: `Bearer ${this.getRefreshToken()}` },
