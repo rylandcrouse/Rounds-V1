@@ -23,7 +23,7 @@ const Room = observer(() => {
         store.io.handleLeave();
     }
 
-    if (!store.io.room) return <Redirect to='/home' />
+    if (!store.io.room) return <Redirect to='/' />
 
     return (
         <Container>
