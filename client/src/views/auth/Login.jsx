@@ -56,7 +56,6 @@ const Login = observer(() => {
             </Formy>
                 <Groupet>
                 <a href="/signup"> Create an account</a>
-
                 </Groupet>
         </Container>
     )
