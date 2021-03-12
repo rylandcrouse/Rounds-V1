@@ -44,7 +44,7 @@ const Route = ({
         return (
             <ROUTE
                 {...rest}
-                render={() => <Redirect to="/" />}
+                render={() => <Redirect to="/login" />}
             />
         )
     }

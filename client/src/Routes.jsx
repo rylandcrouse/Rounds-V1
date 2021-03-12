@@ -20,13 +20,13 @@ import Room from './views/room/Room';
 const Routes = (props) => {
     return (
         <Switch>
-            <Route path='/' noauth exact Component={Welcome} />
+            {/* <Route path='/' noauth exact Component={Welcome} /> */}
 
             <Route path='/login' noauth exact Component={Login} />
             <Route path='/signup' noauth exact Component={SignUp} />
             <Route path='/match' noauth exact Component={Match} />
 
-            <Route path='/home' auth exact Component={Home} />
+            <Route path='/' auth exact Component={Home} />
             <Route path='/room' auth exact Component={Room} />
 
 
