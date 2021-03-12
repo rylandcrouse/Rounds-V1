@@ -53,7 +53,7 @@ class Instance {
 
     connect = async () => {
         if (this.socket) return;
-        this.socket = await io.connect(`http://${config.io.host}:${config.io.port}`, {
+        this.socket = await io.connect(`/`, {
             query: {
                 token: api.auth.getAccessToken()
             }
