@@ -54,6 +54,10 @@ const Login = observer(() => {
                     <Button onClick={() => handleSubmit()}>Login</Button>
                 </Groupet>
             </Formy>
+                <Groupet>
+                <a href="/signup"> Create an account</a>
+
+                </Groupet>
         </Container>
     )
 })
