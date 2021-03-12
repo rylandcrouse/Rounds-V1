@@ -1,4 +1,4 @@
-import { makeAutoObservable, runInAction } from "mobx"
+import { configure, makeAutoObservable, runInAction } from "mobx"
 import io from 'socket.io-client';
 import api from './../utils/api/index'
 import { getStream, } from './media';
@@ -6,7 +6,16 @@ import Peer from 'peerjs';
 import auth from './auth/auth'
 import config from './../utils/config';
 var getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
-const configuration = { 'iceServers': [{ 'urls': 'stun:stun.l.google.com:19302' }] };
+const configuration = {
+    host: 'peerjs-server.herokuapp.com',
+    secure: true,
+    port: 443,
+    iceServers: [
+        { urls: 'stun:stun.l.google.com:19302' },
+        { urls: 'stun:stun1.l.google.com:19302' },
+        { urls: 'stun:stun2.l.google.com:19302' },
+    ]
+};
 
 let peer;
 
@@ -56,14 +65,14 @@ class Instance {
             })
         })
         this.socket.on('user_left', ({ userSocketId, newRoomState }) => {
-            runInAction(()=> {
+            runInAction(() => {
                 delete this.streams[userSocketId];
                 delete this.calls[userSocketId];
                 this.room = newRoomState;
             })
         })
         this.socket.on('connect', () => {
-            peer = new Peer(this.socket.id);
+            peer = new Peer(this.socket.id, configuration);
             peer.on('call', (call) => {
                 getUserMedia({
                     video: {
