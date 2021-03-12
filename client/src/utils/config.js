@@ -2,14 +2,15 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 const io = {
-    host: process.env.REACT_APP_IO_HOST || process.env.REACT_APP_HOST,
-    port: process.env.REACT_APP_IO_PORT || process.env.REACT_APP_HOST
+    host: process.env.REACT_APP_IO_HOST || '0.0.0.0',
+    port: process.env.REACT_APP_IO_PORT || process.env.PORT
 }
 
+console.log(io)
 
 const auth = {
-    host: process.env.REACT_APP_AUTH_HOST || process.env.REACT_APP_HOST,
-    port: process.env.REACT_APP_AUTH_PORT || process.env.REACT_APP_PORT,
+    host: process.env.REACT_APP_AUTH_HOST || '0.0.0.0',
+    port: process.env.REACT_APP_AUTH_PORT || process.env.PORT,
 }
 
 const config = {
