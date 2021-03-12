@@ -11,12 +11,6 @@ const WhichWhat = observer(({ playerSocketId }) => {
     const room = store.io.room;
     const playerState = room.game.playerStates[playerSocketId]
     // const videoRef = useRef(null);
-    useEffect(() => {
-        console.log('1111111111111')
-        console.log(playerState)
-        console.log('1111111111111')
-
-    }, [])
 
 
     return (

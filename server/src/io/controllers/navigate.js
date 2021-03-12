@@ -23,7 +23,6 @@ export const createRoom = async (io, socket, redis) => {
                 if (err || !hostUserInfo) return io.to(socket.id).emit('user_error');
 
                 const parsedHost = JSON.parse(hostUserInfo)
-                console.log(parsedHost)
 
 
                 const newRoom = new Room(roomId, parsedHost, socket.id);

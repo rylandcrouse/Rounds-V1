@@ -20,7 +20,6 @@ const Room = observer(() => {
     }
 
     const handleLeave = () => {
-        console.log('leaving');
         store.io.handleLeave();
     }
 

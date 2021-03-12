@@ -50,14 +50,12 @@ class Instance {
             }
         })
         this.socket.on('game_update', (gameState) => {
-            console.log('recieved game state')
             runInAction(() => {
                 this.room.game = gameState;
 
             })
         })
         this.socket.on('user_left', ({ userSocketId, newRoomState }) => {
-            console.log('handling user_left for ' + userSocketId)
             runInAction(()=> {
                 delete this.streams[userSocketId];
                 delete this.calls[userSocketId];
@@ -65,11 +63,8 @@ class Instance {
             })
         })
         this.socket.on('connect', () => {
-            console.log('connected');
             peer = new Peer(this.socket.id);
-            console.log(peer)
             peer.on('call', (call) => {
-                console.log('GOT CALL')
                 getUserMedia({
                     video: {
                         width: 1280,
@@ -78,36 +73,27 @@ class Instance {
                 }, (stream) => {
                     call.answer(stream); // Answer the call with an A/V stream.
                     call.on('stream', (remoteStream) => {
-                        console.log('GOT ANSWER')
-
-                        console.log(call)
                         runInAction(() => {
                             this.streams[call.peer] = remoteStream
                         })
-                        console.log(this.streams)
                         // Show stream in some video/canvas element.
                     });
                 }, function (err) {
-                    console.log('Failed to get local stream', err);
                 });
             });
         });
         this.socket.on('FORCED_DISCONNECT', () => {
-            console.log('forcing disconnect')
-            console.log(auth)
             auth.signOut();
             this.socket.disconnect();
         })
         this.socket.on('join_success', ({ roomState }) => {
             runInAction(() => {
-                console.log(roomState);
                 this.room = roomState;
                 this.status.join.loading = false;
             })
             this.initMedia();
         })
         this.socket.on('create_success', (room) => {
-            console.log(`Created room ${room.id}`);
             runInAction(() => {
                 this.room = room;
                 this.status.create.loading = false;
@@ -115,7 +101,6 @@ class Instance {
             this.initMedia();
         })
         this.socket.on('user_joined', ({ userSocketId, roomState }) => {
-            console.log(`${userSocketId} joined.`)
             runInAction(() => {
                 this.room = roomState;
             })
@@ -132,12 +117,10 @@ class Instance {
         this.media.getTracks().forEach(track => track.stop());
         this.streams[this.socket.id].getTracks().forEach(track => track.stop());
         for (let key in this.streams) {
-            console.log(key);
             delete this.streams[key]
             if (key !== this.socket.id) {
                 delete this.calls[key]
                 peer.connections[key][0].peerConnection.close()
-                console.log(peer.connections)
             }
         }
         this.media = null;
@@ -146,21 +129,15 @@ class Instance {
 
     addCallListener = () => {
         this.peer.once('call', async (call) => {
-            console.log('recieving call')
 
             call.answer(this.media); // Answer the call with an A/V stream.
             call.on('stream', (remoteStream) => {
                 // Show stream in some video/canvas element.
-                console.log('REMOTE STREAM')
             });
         })
     }
 
     callPeer = async (socketId) => {
-        console.log('THIS IS')
-        console.log(this)
-        // const call = await this.peer.call('another-peers-id', this.streams[this.socket.id]);
-        // console.log(call)
         getUserMedia({
             video: {
                 width: 1280,
@@ -168,15 +145,12 @@ class Instance {
             },
             audio: true
         }, (stream) => {
-            console.log(this)
             this.calls[socketId] = peer.call(socketId, stream);
             this.calls[socketId].on('stream', (remoteStream) => {
                 // Show stream in some video/canvas element.
                 this.streams[socketId] = remoteStream
-                console.log(`CALLING ${socketId}`)
             });
         }, function (err) {
-            console.log('Failed to get local stream', err);
         });
     }
 
@@ -193,15 +167,11 @@ class Instance {
 
 
     initMedia = async () => {
-        if (window.stream) { console.log(window) }
-
         const stream = await getStream();
         runInAction(() => {
             this.media = stream;
             this.streams[this.socket.id] = stream;
-            console.log(this.streams[this.socket.id]);
         })
-        console.log(`My socket id is ${this.socket.id}`)
     }
 
     start = (gametype) => {
@@ -210,7 +180,6 @@ class Instance {
             gametype: gametype,
             action: 'start',
         })
-        console.log(`Signaled to start a game of ${gametype}...`);
     }
 
     guess = (text) => {
@@ -223,7 +192,6 @@ class Instance {
     }
 
     passTurn = () => {
-        console.log('manual turn pass')
         this.socket.emit('action', {
             roomId: this.room.id,
             gametype: this.room.game.gametype,
