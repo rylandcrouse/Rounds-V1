@@ -33,7 +33,7 @@ const Route = ({
         return (
             <ROUTE
                 {...rest}
-                render={() => <Redirect to="/home" />}
+                render={() => <Redirect to="/" />}
             />
         )
     }
