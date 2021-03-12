@@ -3,9 +3,6 @@ import Room from './../models/room.js';
 import { promisify } from 'util';
 import games from './games/index.js'
 
-import userRef from '../../authentication/models/user.js'
-import user from '../../authentication/models/user.js';
-
 
 export const createRoom = async (io, socket, redis) => {
     let roomId = nanoid(10);
