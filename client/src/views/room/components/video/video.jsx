@@ -12,18 +12,21 @@ const Video = observer(({ id }) => {
     const videoRef = useRef();
 
     useEffect(() => {
-        try {
-            videoRef.current.srcObject = store.io.streams[id];
-        } catch (error) {
-            // Failed to convert value to 'MediaStream'
-            // console.log(store.io.streams[id].getVideoTracks())
-            setInterval(() => {
-                console.log(store.io.streams[id])
-            }, 4000);
-            console.log(error)
-            // videoRef.current.srcObject = URL.createObjectURL(store.io.streams[id]);
-        }
-        console.log(store.io.streams[id])
+        setTimeout(() => {
+            try {
+                videoRef.current.srcObject = store.io.streams[id];
+            } catch (error) {
+                // Failed to convert value to 'MediaStream'
+                // console.log(store.io.streams[id].getVideoTracks())
+                setInterval(() => {
+                    console.log(store.io.streams[id])
+                }, 4000);
+                console.log(error)
+                // videoRef.current.srcObject = URL.createObjectURL(store.io.streams[id]);
+            }
+            console.log(store.io.streams[id])
+
+        }, 20);
 
         // videoRef.current.srcObject = store.io.streams[id]
     }, [])

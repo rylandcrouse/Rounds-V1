@@ -9,6 +9,7 @@ import config from './../../config.js';
 
 export const signUp = async (req, res) => {
     let { display_name, email, password, password_confirmation } = req.body;
+    email = email.toLowerCase();
 
     // Verify that the password matches the confirmation, else the user may have made a mistake
     if (password !== password_confirmation) {
@@ -72,6 +73,7 @@ export const signUp = async (req, res) => {
 
 export const signIn = async (req, res) => {
     let { email, password } = req.body;
+    email = email.toLowerCase();
     let user;
     if (email && password) {
         // Search for a user with the given email in the database

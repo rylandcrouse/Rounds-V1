@@ -3,6 +3,8 @@ class Room {
     hostSocketId = null;
     players = [];
 
+    game = null;
+
     constructor(id, host, hostSocketId) {
         this.hostSocketId = hostSocketId;
         this.id = id;

@@ -1,13 +1,7 @@
 import { nanoid } from 'nanoid';
-import mongoose from 'mongoose';
 import Room from './../models/room.js';
-import getFromRedis from './helpers/getFromRedis.js'
 import { promisify } from 'util';
-// const getRedis = promisify(client.get).bind(client);
-
-
-import userRef from '../../authentication/models/user.js'
-import user from '../../authentication/models/user.js';
+import games from './games/index.js'
 
 
 export const createRoom = async (io, socket, redis) => {
@@ -26,7 +20,6 @@ export const createRoom = async (io, socket, redis) => {
                 if (err || !hostUserInfo) return io.to(socket.id).emit('user_error');
 
                 const parsedHost = JSON.parse(hostUserInfo)
-                console.log(parsedHost)
 
 
                 const newRoom = new Room(roomId, parsedHost, socket.id);
@@ -145,47 +138,37 @@ export const handleDisconnect = async (io, socket, redis) => {
 }
 
 export const handleLeave = async (io, socket, redis) => {
-
     console.log(`handling leave for ${socket.id}`)
     const redisGet = promisify(redis.get).bind(redis);
 
     const userIdFromSocketId = await redisGet(`socket_${socket.id}`)
-    console.log(userIdFromSocketId)
 
     if (!userIdFromSocketId) return
 
     const userFromRedis = await redisGet(userIdFromSocketId);
-    console.log(userFromRedis)
     const userParsed = JSON.parse(userFromRedis)
 
     if (!userParsed || !userParsed.currentRoom) return
 
     const currentRoomState = await redisGet(userParsed.currentRoom)
-    // console.log(currentRoomState);
 
     let parsedRoom = await JSON.parse(currentRoomState)
 
-    console.log('^^^^^^^^^^^^^^^^^^^^^')
-    console.log(parsedRoom)
-    console.log(parsedRoom.players.map(x => x.socketId !== userParsed.socketId))
+    
+    socket.leave(parsedRoom.id);
+    
     const newRoomState = {
         ...parsedRoom,
         players: parsedRoom.players.filter(player => player.socketId !== userParsed.socketId)
     }
-
+    
     const newRoomStringified = JSON.stringify(newRoomState);
-
+    
     redis.set(userParsed.currentRoom, newRoomStringified);
 
-    io.to(userParsed.currentRoom).emit('user_left', { userSocketId: userParsed.socketId, newRoomState })
-
-    console.log(newRoomState)
-
-    console.log('^^^^^^^^^^^^^^^^^^^^^')
-
-
-
-
-
-
+    if (parsedRoom.game) {
+        games[parsedRoom.game.gametype].handleLeave(io, socket, redis, newRoomState)
+    }
+    
+    io.to(userParsed.currentRoom).emit('user_left', { userSocketId: userParsed.socketId, newRoomState });
 }
