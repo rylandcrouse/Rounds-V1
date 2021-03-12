@@ -15,7 +15,7 @@ const WhichWhat = observer(({ gameHeight }) => {
 
     return (
         <GuessersBox gameHeight={gameHeight}>
-            {Object.keys(store.io.streams).map(id => <Guesser key={`actor_${id}`} playerSocketId={id} />)}
+            {Object.keys(store.io.streams).filter(id => id !== room.game.turn.player).map(id => <Guesser key={`actor_${id}`} playerSocketId={id} />)}
         </GuessersBox>
     )
 });
