@@ -1,6 +1,22 @@
 import styled, {keyframes} from 'styled-components';
 import { Button as BSButton, FormControl } from 'react-bootstrap';
 
+export const Logout = styled.svg`
+    width: 2vmax;
+    height: 2vmax;
+    min-width: 25px;
+    min-height: 25px;
+    position: absolute;
+    top: 1vh;
+    left: 1vh;
+    fill: #d6d6d6;
+
+    &:hover {
+        fill: #e38b81;
+        cursor: pointer;
+    }
+`;
+
 
 const Grow = keyframes`
     0% {width: 1px;}
@@ -50,7 +66,7 @@ export const HostFocusOption = styled(Button)`
 export const Container = styled.div`
     width: 100vw;
     height: 100vh;
-
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
